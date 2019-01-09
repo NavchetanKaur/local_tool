@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    
+    <title>TransplantToolBox</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
+   </head>
+ 
+ <body>
+  <nav class="navbar sticky-top navbar-expand-sm justify-content-center nav-tabs navbar-dark bg-dark">
+    <div class= "nav">
+        <a class="navbar-brand text-center text-white pl-5 pr-5 h1" href="{% url 'ttb_home' %}" > TransplantToolbox  </a>
+              <li class="nav-item active">
+                <a class="nav-link text-white pl-5 pr-5 h5" href="{% url 'home' %}"> ALLAN </a>
+
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link text-white pl-5 pr-5 h5" href="{% url 'victor_home' %}"> VICTOR </a>
+              </li>
+
+              <li class="nav-item active">
+                <a class="nav-link text-white h5  pl-5 pr-5" href="https://transplanttoolbox.shinyapps.io/cpra-allele/"> CPRA Calculator </a>
+              </li>
+
+              <li class="nav-item active">
+                <a class="nav-link text-white pl-5 pr-5 h5" href="https://hla.tulane.edu/"> Gragert Lab </a>
+              </li>
+         </div>
+  
+
+</nav>
+
+
+  <div class="jumbotron text-center">
+    <h1 style="font-size:300%;" class="text-danger font-weight-bold" >  TransplantTToolbox  <img class="mr-4 mb-3" id="ttb" src="{% static "images/tools.png" %}", width="100", height="100"></h1> 
+        <hr>
+        <br>
+        
+    <h1 style="font-size:200%;" class="mt-1 mb-1">Informatics Tools for HLA Data in Solid Organ Transplantation </h1>
+
+
+   </div> 
+ <div class="container text-center"> 
+<!--<img class="mr-4 mb-3" id="ttb" src="{% static "images/tools.png" %}", width="100", height="100"> </a> -->
+
+</div>
+   <br>
+  
+ 
+  
+<div class=" jumbotron container">
+ <div class="row">  
+  <div class="card" style="width: 23rem;">
+    <div class="card-body">
+      <h1 class="card-title"> ALLAN </h1>
+        <p class="card-text"> Map Molecular HLA Typing Data to UNOS Serologic Equivalents </p>
+        <br>
+        <a href="{% url 'home' %}" class="btn btn-lg btn-success active"> CLICK HERE !</a>
+      </div>
+    </div>
+
+  <div class="card" style="width: 23rem;">
+    <div class="card-body">
+      <h1 class="card-title"> VICTOR </h1>
+        <p class="card-text"> Compute Virtual Crossmatch for Molecular HLA Typing Data </p>
+        <br>
+          <a href="{% url 'victor_home' %}" class="btn btn-lg btn-primary active"> CLICK HERE !</a>
+          </div>
+          </div>  
+
+
+  <div class="card" style="width: 23rem;">
+    <div class="card-body">
+      <h1 class="card-title"> CPRA Calculator </h1>
+      <p class="card-text"> Compute CPRA with NMDP Allele Frequencies Data and Allele Specific Unacceptables </p>
+      <a href="https://transplanttoolbox.shinyapps.io/cpra-allele/" class="btn btn-lg btn-dark" > CLICK HERE !</a>
+      </div>
+      </div>
+</div>
+</div>
+
+
+<br>
+<br>
+<br>
+<br>
+<h1 class="container mt-5 text-center"> Acknowledgements  </h1>
+<br>
+ <br>
+<div id="carouselExampleControls" class=" bg-light card pt-5 container carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item  text-center active">
+       <a href="https://unos.org/" > 
+        <img class="mb-3" id="unos_logo" src="{% static "images/UNOS_big_logo.png" %}", width="400", height="150" alt="First slide"> </a> 
+        
+          <h5 class="mt-5"> United Network for Organ Sharing (UNOS) Histocompatibility Committee  </h5>
+        
+    </div>
+    <div class="carousel-item text-center ">
+      <a href="https://bethematch.org/"> 
+        <img class="mr-4 mb-3" id="nmdp_logo" src="{% static "images/Be-the-Match-R_CMYK.png" %}", width="400", height="65" alt="Second slide"> </a> 
+        <h5 class="mt-5"> Bioinformatics Research Department at National Marrow Donor Program (NMDP) / Be The Match   </h5>
+    </div>
+    <div class="carousel-item text-center ">
+      <a href="https://www.cibmtr.org/Pages/index.aspx" > 
+        <img class="mr-4 mb-3" id="cibmtr_logo" src="{% static "images/cibmtr-logo-new.jpg" %}", width="400", height="100"> </a> 
+        <h5 class="mt-5"> Center for International Blood and Marrow Transplant Research (CIBMTR)   </h5>
+    </div>
+    <div class="carousel-item text-center ">
+      <a href="https://www.anthonynolan.org/" > 
+        <img class="mr-4" id="unos_logo" src="{% static "images/anthany_nolan_logo.png" %}", width="400", height="100"> </a>
+        <br>
+        <h5 class="mt-5"> HLA Informatics Group at Anthony Nolan Trust (IPD-IMGT/HLA Database)   </h5>
+    </div>
+    <div class="carousel-item text-center ">
+      <a href="http://www.immucor.com/en-us/Pages/Main-Page.aspx" > 
+        <img class="mr-4" id="unos_logo" src="{% static "images/immucor.png" %}", width="300", height="100"> </a>
+        <h5 class="mt-5"> Immucor, Inc.  </h5>
+    </div>
+    <div class="carousel-item text-center ">
+      <a href="http://www.onelambda.com/en/home.html" > 
+        <img id="unos_logo" src="{% static "images/One_lambda.png" %}", width="300", height="100"> </a>
+        <h5 class="mt-5"> One Lambda, A Thermo Fisher Scientific Brand    </h5>
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<div class="jumbotron text-white text-center" style="background-color:  black;">
+  <h2> Contact Us!</h2> 
+  <br>
+  <h3> <em>  For scientific and technical queries contact pathologygragertlab@tulane.edu. </em> </h3>
+  
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>    
+</body>    
+</html>

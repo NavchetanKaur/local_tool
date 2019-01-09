@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
+        <title>TransplantToolbox</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+     
+    </head>
+</html>
+<nav class="navbar sticky-top navbar-expand-sm justify-content-center" style="background-color: #003399;">
+    <div class="nav" >
+        <a class="navbar-brand text-white h1" href="{% url 'ttb_home' %}"> TransplantToolbox  </a>
+        <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+             <ul class="nav nav-fill nav-pills">
+                <li class="nav-item active">
+                   <a class=" text-center nav-link text-white h5" href="{% url 'victor_home' %}"> Home </a> 
+                 </li>
+                 <li class="nav-item active">
+                  <a class="nav-link text-white h5" href="{% url 'unosags' %}"> UNOS Antigen Equivalents</a>
+                </li>
+                 <li class="nav-item active">
+                  <a class="nav-link text-white h5" href="{% url 'highresallele' %}"> High Resolution Alleles </a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link text-white h5" href="{% url 'glsvxm' %}"> Genotype List Strings</a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link text-white h5" href="{% url 'macvxm' %}"> Multiple Allele Codes </a>
+                </li>
+                <li class="nav-item active">
+                <a class="nav-link text-white h5" href="{% url 'victor_services' %}"> Web Services </a>
+              </li>
+                <li class="nav-item active">
+                  <a class="nav-link text-white h5" href="{% url 'victor_license' %}"> License </a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link text-white h5" href="{% url 'home' %}"> ALLAN</a>
+                </li>
+    </ul>
+    </div>
+    </nav>                  
+
+    
+
+<body>
+
+ 
+<div class="text-center pt-1 pb-1 lead">
+    <h1 class="text-success jumbotron font-weight-bold"> Virtual Crossmatch results using VICTOR algorithm </h1>
+</div>
+<br>
+
+  <br>
+
+<div class="">
+
+    <table class="container table table-responsive-sm table-bordered table-hover table-striped  text-xl-left"> 
+            <thead class="thead-dark">
+                <tr> 
+                    <th scope="col"> <h4> Locus <h5></th>
+                    <th scope="col"> <h5> Donor Typing <h5> </th>
+                    <th scope="col"> <h5> Donor Alleles With Probabilities <h5> </th>
+                    <th scope="col"> <h5> Donor UNOS Antigen Equivalencies With Probabilities <h5> </th>
+                    <th scope="col"> <h5> Candidate's Unacceptable Antigens <h5> </th>
+                    <th scope="col"> <h5> OPTN equivalents for Unacceptable Antigens <h5></th>
+                    <th scope="col"> <h5> Conflicting Antigens <h5></th>
+                    
+                </tr>
+            </thead>  
+
+
+<tbody>
+  {% for loci, gl_string, allele_probs, ag_probs, uas, optne, cags_probs in output %}
+  <tr class="bg-light">
+      <td> {{loci}} </td>
+      <td> {{gl_string}} </td>
+      <td> {% for allele in allele_probs %} <li> {{allele}} {% endfor %}  </li> </td> 
+      <td> {% for ag in ag_probs %} <li> {{ag}} {% endfor %}  </li> </td> 
+      <td> {{uas}} </td>
+      <td> {{optne}} </td>
+      <td> {% for cagprob in cags_probs %} <li> {{cagprob}} {% endfor %}  </li> </td>
+      
+
+  </tr>
+      
+      {% endfor %}
+</tbody>
+</table>    
+</div>
+
+
+
+
+<div class="jumbotron text-white mt-5 pt-2 pb-2" style="background-color: #003399;"> 
+<h3 class="container text-center font-italic" > Contact Us </h3>
+     <h5 class="container text-center font-italic"> For scientific and technical queries contact pathologygragertlab@tulane.edu.  </h5>
+     <br>
+      <br>
+<h4 class="container text-center font-italic"> Cite VICTOR Tool</h4>
+    <p class= "container text-center font-italic"> Manuscript under preparation </p>
+    <br>
+     <p class="container text-center font-weight-bold"> Prototype Tool for Research Use Only </p>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</body>
+
+
+
