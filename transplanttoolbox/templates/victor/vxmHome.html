@@ -19,29 +19,38 @@
           <div class="collapse navbar-collapse" id="navbarNav">
              <ul class="nav nav-fill nav-pills">
                 <li class="nav-item active">
-                   <a class=" text-center nav-link text-white h5" href="{% url 'victor_home' %}"> Home </a> 
+                   <a class=" text-center font-weight-bold nav-link text-white" href="{% url 'victor_home' %}"> Home </a> 
                  </li>
-                 <li class="nav-item active">
-                  <a class="nav-link text-white h5" href="{% url 'unosags' %}"> UNOS Antigen Equivalents</a>
-                </li>
-                 <li class="nav-item active">
-                  <a class="nav-link text-white h5" href="{% url 'highresallele' %}"> High Resolution Alleles </a>
-                </li>
-                <li class="nav-item active">
-                  <a class="nav-link text-white h5" href="{% url 'glsvxm' %}"> Genotype List Strings</a>
-                </li>
-                <li class="nav-item active">
-                  <a class="nav-link text-white h5" href="{% url 'macvxm' %}"> Multiple Allele Codes </a>
-                  </li>
+                 
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white font-weight-bold" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Current UNOS Match Run Logic </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item text-white font-weight-bold" style="background-color: #003399"; href="{% url 'unosags' %}"> UNOS Antigen Equivalents</a>
+                <div class="dropdown-divider text-danger"></div>
+                <a class="dropdown-item text-white font-weight-bold" style="background-color: #003399"; href="{% url 'highresallele' %}"> High Resolution Alleles</a> </div> </li>
+                 
+
+                 <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle font-weight-bold text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                   Proposed Algorithm for Interpreting Ambiguous HLA Typing </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item text-white font-weight-bold" style="background-color: #003399"; href="{% url 'unosags' %}"> UNOS Antigen Equivalents</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item text-white font-weight-bold" style="background-color: #003399"; href="{% url 'glsvxm' %}"> Genotype List Strings </a> 
+                <div class="dropdown-divider"></div>
+              <a class="dropdown-item text-white font-weight-bold" style="background-color: #003399"; href="{% url 'macvxm' %}"> Multiple Allele Codes </a></div> </li>
+                 
+                
                    <li class="nav-item active">
-                <a class="nav-link text-white h5" href="{% url 'victor_services' %}"> Web Services </a>
+                <a class="nav-link text-white font-weight-bold" href="{% url 'victor_services' %}"> Web Services </a>
               
                 </li>
                 <li class="nav-item active">
-                  <a class="nav-link text-white h5" href="{% url 'victor_license' %}"> License </a>
+                  <a class="nav-link text-white font-weight-bold" href="{% url 'victor_license' %}"> License </a>
                 </li>
                 <li class="nav-item active">
-                  <a class="nav-link text-white h5" href="{% url 'home' %}"> ALLAN</a>
+                  <a class="nav-link text-white font-weight-bold" href="{% url 'home' %}"> ALLAN</a>
                 </li>
     </ul>
     </div>
@@ -68,28 +77,26 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button> </div> 
-    <h3 class="container font-weight-bold text-center mt-4 mb-5" > HLA Typing Data Input Formats (choose one): </h3>
-<div class="container pl-5 pr-5"> 
-<div class="row">
-        <div class="card"> 
-            <div class="card-body">
-                <h5 class="card-title">Antigen-Level Typing </h5> 
-                    <div> <a  class="btn btn-success text-white active btn-md" href="{% url 'unosags' %}" role="button" > UNOS Antigen Equivalents</a> </div> </div></div> 
-  
-        <div class="card"> 
-          <div class="card-body">
-              <h5 class="card-title">Unambiguous HLA Typing</h5> 
-                  <div> <a  class="btn btn-success text-white active btn-md" href="{% url 'highresallele' %}" role="button" > High Resolution Alleles</a> </div> </div></div> 
+    <h3 class="container font-weight-bold text-center mt-4 mb-5" > Virtual Crossmatch Algorithm and Donor HLA Typing Input Format (choose one:) </h3>
+    <div class="container"> 
+    <div>
+        <div class="card bg-light"> 
+            <div class="text-center card-body">
+                <h5 class="card-title font-weight-bold text-center">Current UNOS Match Run Logic </h5> 
+                 <div class="btn-group text-center"> 
+                    <div> <a class="btn btn-danger font-weight-bold text-white  btn-lg" href="{% url 'unosags' %}" role="button" > UNOS Antigen Equivalents</a> </div> 
+                    <div> <a  class="btn btn-danger font-weight-bold text-white btn-lg" href="{% url 'highresallele' %}" role="button" > High Resolution Alleles</a> </div> </div></div>     </div></div>
                   <br> 
           <div class="card"> 
-            <div class="card-body">
-            <h5 class="card-title text-center">Ambiguous HLA Typing</h5> 
+            <div class="card-body bg-light text-center">
+            <h5 class="card-title font-weight-bold text-center">Proposed Algorithm for Interpreting Ambiguous HLA Typing</h5> 
 
             <div class="btn-group"> 
-                  <div> <a  class="btn btn-success text-white active btn-md" href="{% url 'glsvxm' %}" role="button" > Genotype List Strings</a> </div> 
+              <div> <a  class="btn btn-success text-white font-weight-bold  btn-lg" href="{% url 'glsvxm' %}" role="button" > UNOS Antigen Equivalents </a> </div> 
+                  <div> <a  class="btn btn-success text-white font-weight-bold  btn-lg" href="{% url 'glsvxm' %}" role="button" > Genotype List Strings</a> </div> 
 
-                  <div> <a  class="btn btn-success text-white active btn-md" href="{% url 'macvxm' %}" role="button" > NMDP Multiple Allele Codes </a> </div> </div> 
-  </div></div> </div>
+                  <div> <a  class="btn btn-success text-white  font-weight-bold btn-lg" href="{% url 'macvxm' %}" role="button" > NMDP Multiple Allele Codes </a> </div> </div> 
+  </div> </div>
 
 
 

@@ -9,7 +9,6 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
      
     </head>
-</html>
 <nav class="navbar sticky-top navbar-expand-sm justify-content-center" style="background-color: #003399;">
     <div class="nav" >
         <a class="navbar-brand text-white h1" href="{% url 'ttb_home' %}"> TransplantToolbox  </a>
@@ -17,33 +16,42 @@
           <div class="collapse navbar-collapse" id="navbarNav">
              <ul class="nav nav-fill nav-pills">
                 <li class="nav-item active">
-                   <a class=" text-center nav-link text-white h5" href="{% url 'victor_home' %}"> Home </a> 
+                   <a class=" text-center font-weight-bold nav-link text-white" href="{% url 'victor_home' %}"> Home </a> 
                  </li>
-                 <li class="nav-item active">
-                  <a class="nav-link text-white h5" href="{% url 'unosags' %}"> UNOS Antigen Equivalents</a>
-                </li>
-                 <li class="nav-item active">
-                  <a class="nav-link text-white h5" href="{% url 'highresallele' %}"> High Resolution Alleles </a>
+                 
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white font-weight-bold" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Current UNOS Match Run Logic </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item text-white font-weight-bold" style="background-color: #003399"; href="{% url 'unosags' %}"> UNOS Antigen Equivalents</a>
+                <div class="dropdown-divider text-danger"></div>
+                <a class="dropdown-item text-white font-weight-bold" style="background-color: #003399"; href="{% url 'highresallele' %}"> High Resolution Alleles</a> </div> </li>
+                 
+
+                 <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle font-weight-bold text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                   Proposed Algorithm for Interpreting Ambiguous HLA Typing </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item text-white font-weight-bold" style="background-color: #003399"; href="{% url 'unosags' %}"> UNOS Antigen Equivalents</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item text-white font-weight-bold" style="background-color: #003399"; href="{% url 'glsvxm' %}"> Genotype List Strings </a> 
+                <div class="dropdown-divider"></div>
+              <a class="dropdown-item text-white font-weight-bold" style="background-color: #003399"; href="{% url 'macvxm' %}"> Multiple Allele Codes </a></div> </li>
+                 
+                
+                   <li class="nav-item active">
+                <a class="nav-link text-white font-weight-bold" href="{% url 'victor_services' %}"> Web Services </a>
+              
                 </li>
                 <li class="nav-item active">
-                  <a class="nav-link text-white h5" href="{% url 'glsvxm' %}"> Genotype List Strings</a>
+                  <a class="nav-link text-white font-weight-bold" href="{% url 'victor_license' %}"> License </a>
                 </li>
                 <li class="nav-item active">
-                  <a class="nav-link text-white h5" href="{% url 'macvxm' %}"> Multiple Allele Codes </a>
-                </li>
-                <li class="nav-item active">
-                <a class="nav-link text-white h5" href="{% url 'victor_services' %}"> Web Services </a>
-              </li>
-                <li class="nav-item active">
-                  <a class="nav-link text-white h5" href="{% url 'victor_license' %}"> License </a>
-                </li>
-                <li class="nav-item active">
-                  <a class="nav-link text-white h5" href="{% url 'home' %}"> ALLAN</a>
+                  <a class="nav-link text-white font-weight-bold" href="{% url 'home' %}"> ALLAN</a>
                 </li>
     </ul>
     </div>
-    </nav>                  
-
+    </nav>      
     
 
 <body>
