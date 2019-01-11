@@ -49,6 +49,9 @@ def vxm_uags(donorags, candidateags):
 
 	
 	recepient_ags = [item for sublist in UA_list for item in sublist]
+	recepient_ags = list(set(recepient_ags))
+	print(recepient_ags)
+
 
 	for ag in donorags:
 		if ag in agbw46.keys():
@@ -56,21 +59,22 @@ def vxm_uags(donorags, candidateags):
 
 	donorags = list(set(donorags))
 
-	for ag in donorags:
-		bw = map_ag_to_bw46(ag)
-		donor_bws_list.append(bw)
-		
-	for ag in donorags:
-		alleles = map_single_ag_to_alleles(ag)
-		donor_ags_alleles.append([ag])
-		if alleles:
-			donor_ags_alleles.append(alleles)
+	#for ag in donorags:
+		#bw = map_ag_to_bw46(ag)
+		#print(bw)
+		#donor_bws_list.append(bw)
+	#print(donor_bws_list)	
+	#for ag in donorags:
+		#alleles = map_single_ag_to_alleles(ag)
+		#donor_ags_alleles.append([ag])
+		#if alleles:
+			#donor_ags_alleles.append(alleles)
 	
 	#print(donor_ags_alleles)
-	merged_dags_alleles = list(itertools.chain(*donor_ags_alleles))
+	#merged_dags_alleles = list(itertools.chain(*donor_ags_alleles))
 
 	for ag in recepient_ags:
-		if ag in merged_dags_alleles:
+		if ag in donorags:
 			conflicts.append(ag)
 
 	return (donorags, recepient_ags, conflicts)

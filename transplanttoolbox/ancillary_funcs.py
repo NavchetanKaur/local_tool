@@ -33,22 +33,27 @@ def group_serotypes_per_locus(ag_list):
 	dq_locus_ag = []
 
 	for ag in ag_list:
-		if re.findall("A", ag):
-			a_locus_ag.append(ag)
 
-		if re.findall("B", ag):
-			b_locus_ag.append(ag)
+		if ag == "Bw4" or ag == "Bw6":
+			bw_locus_ag.append(ag)
 
-		if re.findall("C", ag):
-			c_locus_ag.append(ag)
+		else:	
+			if re.findall("A", ag):
+				a_locus_ag.append(ag)
 
-		if re.findall("DR", ag):
-			dr_locus_ag.append(ag)		
+			if re.findall("B", ag):
+				b_locus_ag.append(ag)	
+
+			if re.findall("C", ag):
+				c_locus_ag.append(ag)
+
+			if re.findall("DR", ag):
+				dr_locus_ag.append(ag)		
 		
-		if re.findall("DQ", ag):
-			dq_locus_ag.append(ag)		
+			if re.findall("DQ", ag):
+				dq_locus_ag.append(ag)		
 
-	locus_sorted_ag_list = [", ".join(sorted(a_locus_ag))] + [", ".join(sorted(b_locus_ag))]  + [", ".join(sorted(c_locus_ag))] + [", ".join(sorted(dr_locus_ag))] + [", ".join(sorted(dq_locus_ag))]
+	locus_sorted_ag_list = [", ".join(sorted(a_locus_ag))] + [", ".join(sorted(b_locus_ag))] + [", ".join(sorted(bw_locus_ag))] + [", ".join(sorted(c_locus_ag))] + [", ".join(sorted(dr_locus_ag))] + [", ".join(sorted(dq_locus_ag))]
 
 
 	return locus_sorted_ag_list	

@@ -90,7 +90,7 @@ def match_ags(request):
 
 	##### all data required for table is pput in list 
 	donor_typing = donorAgs
-	recepient_ags = recepientAgs
+	recepient_ags = list(set(recepientAgs))
 	conflicting_ags = vxm_output[2]
 	optn_equis = vxm_output[1]
 
@@ -110,7 +110,7 @@ def match_ags(request):
 
 	#final_locus_list = list(set(locus_list))
 
-	final_locus_list = ["A", "B", "C", "DR", "DQ"]	
+	final_locus_list = ["A", "B", "Bw", "C", "DR", "DQ"]	
 
 		
 

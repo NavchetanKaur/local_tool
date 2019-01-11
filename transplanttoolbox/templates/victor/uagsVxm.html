@@ -61,7 +61,7 @@
     <h2 class="container text-danger text-center font-weight-bold mt-5 mb-5"> Donor HLA Typing as UNOS Antigen Equivalents </h2>
     
 <div> 
-    <p class="container jumbotron pt-4 pb-4 lead" > Enter Donor's HLA typing data as UNOS antigen equivalents in the first text area, enter Recepient's Unacceptable Antigens in the second text area and click on "SUBMIT" to run virtual cross match. </p>
+    <p class="container jumbotron pt-4 pb-4 lead" > Enter Donor's HLA typing data as UNOS antigen equivalents in the first text area, enter Candidate's Unacceptable Antigens in the second text area and click on "SUBMIT" to run Virtual Cross Match. </p>
     
     <form class="container text-center text-primary mt-5" action="{% url 'uagsvxm' %}" method="get">
       <h4 class=" text-danger font-weight-bold mb-2 mt-5"> Donor's UNOS Antigen Equivalents </h4>
@@ -74,7 +74,7 @@
                 </select>
            
      <h4 class=" text-danger font-weight-bold mb-2 mt-5"> Candidate's Unacceptable Antigens </h4>
-     <div> <textarea name = "userinput2" rows = "3" cols = "80" > A2 B15 B27 Bw4 DR2 </textarea>   </div>       
+     <div> <textarea name = "userinput2" rows = "3" cols = "80" > A2 A*01:01 B15 B27 Bw4 DR2 DR103  </textarea>   </div>       
   <input class="btn btn-danger btn-lg active mt-5" type="submit" value="SUBMIT"/> </div> 
   </div> 
      </div> 
