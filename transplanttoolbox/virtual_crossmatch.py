@@ -267,6 +267,8 @@ def vxm_allele_codes(allele_codes_list, donor_ethnicity, recepient_UA_list):
 	return(donor_ags, recepient_ags, conflicts, conflict_ag_probs, donor_allele_freqs, ag_probs, bw_prob)
 
 
+def vxm_proposed_for_uags(donorantigens, donorRace, candidateUAs):
+	return "X"
 
 
 

@@ -62,6 +62,10 @@ def multiple_allele_codes(request):
 
 ##########################################################################################################################################
 
+def proposed_unos_ags(request):
+	return render(request, 'victor/proposedUAGS.html')
+
+#################################################################################################################################################################
 def match_ags(request):
 	output_dict = {}
 	donorAgs = request.GET['userinput1'].strip()
@@ -258,6 +262,11 @@ def match_gl(request):
 		'output3': end_result, "conflicts": afterThcags, 'zipped_list': zip(cags, cag_probs), "output_zipped_list": 
 		gls_output_zipped_list})
 
+
+###################################################################################################################################################################
+
+def match_proposed_uags(request):
+	return render(request, 'victor/proposedUAGSmatch.html')
 
 ###################################################################################################################################################################
 
