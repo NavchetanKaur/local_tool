@@ -275,7 +275,7 @@ def group_list_of_alleles_per_locus(donor_typing_list):
 			donor_dq_alleles.append(i)
 
 
-	final_typing_list = [", ".join(sorted(donor_a_alleles))] + [", ".join(sorted(donor_b_alleles))] + [", ".join(sorted(donor_c_alleles))] + [", ".join(sorted(donor_dr_alleles))] + [", ".join(sorted(donor_dq_alleles))] 
+	final_typing_list = [", ".join(sorted(donor_a_alleles))] + [", ".join(sorted(donor_b_alleles))] + [""] + [", ".join(sorted(donor_c_alleles))] + [", ".join(sorted(donor_dr_alleles))] + [", ".join(sorted(donor_dq_alleles))] 
 
 	return final_typing_list
 
