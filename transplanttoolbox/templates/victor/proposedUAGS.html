@@ -63,7 +63,7 @@
 <div> 
     <p class="container jumbotron pt-4 pb-4 lead" > Enter Donor's HLA typing data as UNOS Antigen Equivalents in the text box, select the subject's race/ethnic category, and add Candidate's Unacceptable Antigens in the second text area and click on "SUBMIT" to run virtual cross match. Population-specific HLA frequencies from NMDP are used to assign the most probable Alleles for donor HLA typing. HLA loci supported are A, B, C, DRB1, DQB1, DRB3/4/5. </p>
     
-    <form class="container text-center text-primary mt-5" action="{% url 'matchmac' %}" method="get">
+    <form class="container text-center text-primary mt-5" action="{% url 'proposedmatchuags' %}" method="get">
        <textarea name = "userinput1" rows = "5" cols = "80" > A3 A1 B7 B8 C07 C05 DR15 DR3 DQ2 DQ6</textarea> 
         <br />
       
@@ -115,7 +115,7 @@
                 </select>
          </div> 
      </div>   
-     <h4 class=" text-danger font-weight-bold mb-3 mt-5"> Candidate's Unacceptable Antigens </h4>
+     <h4 class="text-danger font-weight-bold mb-3 mt-5"> Candidate's Unacceptable Antigens </h4>
      <div> <textarea name = "userinput3" rows = "1" cols = "80" >A2 Bw4 A*01:01 </textarea>   </div> 
     
      <h4 class="text-danger font-weight-bold mt-5 mb-3"> Probability Threshold </h4>
@@ -149,12 +149,3 @@
 </html>
 
 
-
-
-
-
-
-
-
-    
- 

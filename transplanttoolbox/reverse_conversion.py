@@ -85,6 +85,24 @@ def map_single_ag_to_alleles(antigen):
 		allele_list = final_dict[antigen]
 
 	else: 
-		allele_list = []	
+		allele_list = {antigen: []}	
 
 	return allele_list 	
+
+
+
+def map_ag_for_proposed_algo(antigen):
+	alleles = ag_to_allele_dict[antigen]
+	set_alleles = []
+
+	for allele in alleles:
+		new_allele = allele_truncate(allele)
+		set_alleles.append(new_allele)
+
+	alleles_mapped =list(set(set_alleles))
+	return alleles_mapped
+
+
+
+
+

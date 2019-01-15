@@ -4,7 +4,8 @@ import re
 import requests
 import operator
 
-
+import reverse_conversion 
+from  reverse_conversion import map_single_ag_to_alleles, map_ag_for_proposed_algo
 
 
 def allele_truncate(allele):
@@ -107,3 +108,11 @@ def genotype_allele_ag_freq(genotype_frequency):
 	return ag_probs
 
 
+def ags_to_strings(ag1, ag2):
+	allele_list1 = map_ag_for_proposed_algo(ag1)
+	allele_string1 = "/".join(allele_list1)
+	allele_list2 = map_ag_for_proposed_algo(ag2)
+	allele_string2 = "/".join(allele_list2)
+
+	genotype_list = allele_string1 + "+" + allele_string2
+	return genotype_list

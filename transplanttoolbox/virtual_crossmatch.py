@@ -8,7 +8,8 @@ import itertools
 from vxm_hla import allele_truncate, locus_string_geno_list, expand_ac, single_locus_allele_codes_genotype, gl_string_alleles_list, allele_code_to_allele_list, genotype_allele_ag_freq
 
 import conversion_functions_for_VXM
-from conversion_functions_for_VXM import  gl_string_ags, genotype_ags, allele_code_ags, unosagslist, convert_allele_list_to_ags, allele_freq, map_ag_to_bw46, agbw46
+from conversion_functions_for_VXM import  gl_string_ags, genotype_ags, allele_code_ags, unosagslist, convert_allele_list_to_ags
+from conversion_functions_for_VXM import allele_freq, map_ag_to_bw46, agbw46, convert_ag_list_to_gls
 
 import reverse_conversion
 
@@ -41,16 +42,8 @@ def vxm_uags(donorags, candidateags):
 	donor_bws_list = []
 	##### maps candidate's UA to OPTN equivalents ########
 
-	for ag in candidateags:
-		if ag in UA_eq_dict.keys():
-			UA_list.append(UA_eq_dict[ag])
-		else:
-			UA_list.append([ag])	
-
 	
-	recepient_ags = [item for sublist in UA_list for item in sublist]
-	recepient_ags = list(set(recepient_ags))
-	print(recepient_ags)
+	recepient_ags = map_uas_to_optne(candidateags)
 
 
 	for ag in donorags:
@@ -59,19 +52,7 @@ def vxm_uags(donorags, candidateags):
 
 	donorags = list(set(donorags))
 
-	#for ag in donorags:
-		#bw = map_ag_to_bw46(ag)
-		#print(bw)
-		#donor_bws_list.append(bw)
-	#print(donor_bws_list)	
-	#for ag in donorags:
-		#alleles = map_single_ag_to_alleles(ag)
-		#donor_ags_alleles.append([ag])
-		#if alleles:
-			#donor_ags_alleles.append(alleles)
-	
-	#print(donor_ags_alleles)
-	#merged_dags_alleles = list(itertools.chain(*donor_ags_alleles))
+
 
 	for ag in recepient_ags:
 		if ag in donorags:
@@ -84,17 +65,8 @@ def vxm_hIresalleles(donorsAlleleList, candidateags):
 	conflicts = []
 	donorags = []
 
-	UA_list = []
 	
-
-	for ag in candidateags:
-		if ag in UA_eq_dict.keys():
-			UA_list.append(UA_eq_dict[ag])
-		else:
-			UA_list.append([ag])	
-
-
-	recepient_ags = [item for sublist in UA_list for item in sublist]
+	recepient_ags = map_uas_to_optne(candidateags)
 
 	donorags = convert_allele_list_to_ags(donorsAlleleList)
 
@@ -138,16 +110,9 @@ def vxm_gls(donor_gl_string, donor_ethnicity, recipient_UA_list):
 	for k in ag_probs.keys():
 		donor_ags.append(k)
 
-	UA_list = []
-	for ag in recipient_UA_list:
-		if ag in UA_eq_dict.keys():
-			UA_list.append(UA_eq_dict[ag])
-		else:
-			UA_list.append([ag])	
-
-
-	recepient_ags = list(filter(None, [item for sublist in UA_list for item in sublist]))
-
+	
+	recepient_ags = map_uas_to_optne(recipient_UA_list)
+		
 
 	donor_alleles_ags = donor_ags + donor_alleles
 	
@@ -194,18 +159,7 @@ def vxm_allele_codes(allele_codes_list, donor_ethnicity, recepient_UA_list):
 	
 	ag_output = output[0]
 	ag_probs = genotype_allele_ag_freq(ag_output)
-	#print(ag_probs)
 	
-
-	'''for ag in ag_probs.keys():
-		if ag in UA_eq_dict.keys():
-			p=0
-			for eqs in UA_eq_dict[ag]:
-				if eqs in ag_probs.keys():
-					p += ag_probs[eqs]
-					ag_probs[ag] = p
-		else:
-			continue'''
 
 	
 	for i,j in ag_probs.items():
@@ -225,15 +179,8 @@ def vxm_allele_codes(allele_codes_list, donor_ethnicity, recepient_UA_list):
 	for k in ag_probs.keys():
 		donor_ags.append(k)
 
-	UA_list = []
-	for ag in recepient_UA_list:
-		if ag in UA_eq_dict.keys():
-			UA_list.append(UA_eq_dict[ag])
-		else:
-			UA_list.append([ag])	
 
-
-	recepient_ags = list(filter(None, [item for sublist in UA_list for item in sublist]))
+	recepient_ags = map_uas_to_optne(recepient_UA_list)
 
 	donor_alleles_ags = donor_ags + donor_alleles
 
@@ -268,7 +215,21 @@ def vxm_allele_codes(allele_codes_list, donor_ethnicity, recepient_UA_list):
 
 
 def vxm_proposed_for_uags(donorantigens, donorRace, candidateUAs):
-	return "X"
+	
+	gls = convert_ag_list_to_gls(donorantigens)
+	output = vxm_gls(gls, donorRace, candidateUAs)
+	return output
 
 
+def map_uas_to_optne(recepient_UA_list):
+	UA_list = []
+	for ag in recepient_UA_list:
+		if ag in UA_eq_dict.keys():
+			UA_list.append(UA_eq_dict[ag])
+		else:
+			UA_list.append([ag])	
 
+
+	recepient_ags = list(filter(None, [item for sublist in UA_list for item in sublist]))
+	recepient_ags = list(set(recepient_ags))
+	return recepient_ags

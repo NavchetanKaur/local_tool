@@ -5,10 +5,10 @@ import re
 import pandas as pd 
 #from pd import *
 import conversion_functions_for_VXM
-from conversion_functions_for_VXM import gl_string_ags, genotype_ags, allele_code_ags, convert_allele_list_to_ags
+from conversion_functions_for_VXM import gl_string_ags, genotype_ags, allele_code_ags, convert_allele_list_to_ags, convert_ag_list_to_gls
 
 import virtual_crossmatch
-from virtual_crossmatch import vxm_gls, vxm_allele_codes, vxm_uags, vxm_hIresalleles, UA_eq_dict
+from virtual_crossmatch import vxm_gls, vxm_allele_codes, vxm_uags, vxm_hIresalleles, UA_eq_dict, vxm_proposed_for_uags
 
 import ancillary_funcs
 from ancillary_funcs import group_serotypes_per_locus, split_gl_string_per_locus, prob_dict_list_of_strings, group_list_of_alleles_per_locus, prob_dict_list_of_strings_for_antigens
@@ -156,7 +156,7 @@ def match_hi_res_alleles(request):
 
 	##############################################Locus list to be printed in the table rows ##############################################################################
 	
-	final_locus_list = ["A", "B", "C", "DR", "DQ"]	
+	final_locus_list = ["A", "B", "Bw", "C", "DR", "DQ"]	
 	final_alleles_list = group_list_of_alleles_per_locus(donor_alleles_list)	
 	unos_eq_locus_list = group_serotypes_per_locus(donorUNOSAgs)
 	ua_locus_list = group_serotypes_per_locus(recepientAgs)
@@ -266,8 +266,85 @@ def match_gl(request):
 ###################################################################################################################################################################
 
 def match_proposed_uags(request):
-	return render(request, 'victor/proposedUAGSmatch.html')
+	donorTyping = request.GET['userinput1'].strip()
+	donorTyping = re.split(r'[;,\s]\s*' , donorTyping)
+	#print(donorTyping)
+	popSpec = request.GET['userinput2']
+	popSpecFul = pop_acro_dict[popSpec]
+	recepientAntigens = request.GET['userinput3']
+	pbTh = float(request.GET['userinput4'])
 
+	donor_gls = convert_ag_list_to_gls(donorTyping)
+
+	if len(recepientAntigens) == 0:
+		recepientAntigens = []
+	else:
+		recepientAntigens = re.split(r'[;,\s]\s*' , recepientAntigens)
+	#print(recepientAntigens)
+	
+	entered_recepient_antigens = ", ".join(sorted(list(set(filter(None,recepientAntigens)))))
+	#print(entered_recepient_antigens)
+	vxm_output = vxm_proposed_for_uags(donorTyping, popSpec, recepientAntigens)
+	donorAgs = sorted(vxm_output[0])
+	donor_ags = ', '.join(donorAgs)
+	candags = vxm_output[1]
+	ag_probabilities = vxm_output[3]
+	allele_probs = vxm_output[4]
+	antigen_probs = vxm_output[5]
+	bw_prob = vxm_output[6]
+	
+	ua_locus_list = group_serotypes_per_locus_with_bw_2(allele_probs, recepientAntigens)
+	
+	
+	
+	optne_locus_list = group_serotypes_per_locus_with_bw(allele_probs, candags)
+	recepient_ags = ', '.join(sorted(list(set(candags))))
+	conflicted_ag = ', '.join(sorted(list(set(vxm_output[2]))))
+	
+	donor_bws = mapping_bws_for_gls(donor_gls)
+	#print(donor_bws)
+	donor_bws_string = "+ ".join(donor_bws)
+	
+	
+	allele_list_with_probs = prob_dict_list_of_strings(allele_probs, bw_prob)
+	
+	antigen_list_with_probs = prob_dict_list_of_strings_for_antigens(allele_probs, antigen_probs)
+	
+	new_ag_probs = {}
+	for ag, pp in ag_probabilities.items():
+		if pp >= pbTh:
+			new_ag_probs[ag] = pp
+	#print(new_ag_probs)
+	cags = []
+	cag_probs = []
+	for i, k in sorted(new_ag_probs.items()):
+		ki = round_freq_se(k)
+		cags.append(i)
+		cag_probs.append(ki)
+	
+
+	#cag_list_above_th_locus_sorted = prob_dict_list_of_strings(new_ag_probs)
+	cag_list_above_th_locus_sorted = conflicts_ags(allele_probs, new_ag_probs)
+	#print(cag_list_above_th_locus_sorted)
+	afterThcags = ", ".join(sorted(cags))
+	final_locus_list = ["A", "B", "Bw", "C", "DR", "DQ"]	
+	donor_strings = split_gl_string_per_locus(donor_gls, donor_bws_string)
+	
+
+	if len(conflicted_ag) == 0:
+		end_result = "Virtual Crossmatch is Negative"
+	else:
+		end_result = "Virtual Crossmatch is Positive"	
+	
+	donor_ags_locus_list = group_serotypes_per_locus(donorTyping)
+	gls_output_zipped_list = zip(final_locus_list, donor_ags_locus_list, allele_list_with_probs, antigen_list_with_probs, ua_locus_list, optne_locus_list, cag_list_above_th_locus_sorted)
+	
+	return render(request, 'victor/proposedUAGSmatch.html', {'donor_ags': donor_ags, 
+		'entered_recepient_antigens': entered_recepient_antigens, 'recepient_ags': recepient_ags, 'output1': ", ".join(sorted(donorTyping)), 'ethinicity': popSpecFul, 
+		'output3': end_result, "conflicts": afterThcags, 'zipped_list': zip(cags, cag_probs), "output_zipped_list": 
+		gls_output_zipped_list})
+
+	
 ###################################################################################################################################################################
 
 

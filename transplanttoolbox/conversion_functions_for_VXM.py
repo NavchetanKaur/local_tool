@@ -6,7 +6,7 @@ import requests
 import operator
 import glob
 import vxm_hla
-from vxm_hla import allele_truncate, locus_string_geno_list, expand_ac, single_locus_allele_codes_genotype
+from vxm_hla import allele_truncate, locus_string_geno_list, expand_ac, single_locus_allele_codes_genotype, ags_to_strings
 import decimal
 from decimal import Decimal
 
@@ -314,10 +314,13 @@ def genotype_ags(genotype_list, pop):
 		allele_2 = allele_2.rstrip("g p P G")
 		allele_2 = vxm_hla.allele_truncate(allele_2)
 
-		ag_1 = allele_to_ag_dict[allele_1][0]
-		bw46_1 = allele_to_ag_dict[allele_1][2]
-		ag_2 = allele_to_ag_dict[allele_2][0]
-		bw46_2 = allele_to_ag_dict[allele_2][2]
+		if allele_1 in allele_to_ag_dict.keys():
+			ag_1 = allele_to_ag_dict[allele_1][0]
+			bw46_1 = allele_to_ag_dict[allele_1][2]
+
+		if allele_2 in allele_to_ag_dict.keys():	
+			ag_2 = allele_to_ag_dict[allele_2][0]
+			bw46_2 = allele_to_ag_dict[allele_2][2]
 		
 
 
@@ -675,5 +678,136 @@ def allele_code_ags(allele_codes_list, pop):
 	#print(ag_list)
 	return ag_list, allele_list
 	
+def convert_ag_list_to_gls(ag_list):
+	if len(ag_list) == 2:
+		print("One Locus Typing")
+		ag1 = ag_list[0]
+		ag2 = ag_list[1]
+		gls = ags_to_strings(ag1, ag2)
+
+	if len(ag_list) == 4:
+		print("Two Locus Typing")
+		ag1 = ag_list[0]
+		ag2 = ag_list[1]
+		gls1 = ags_to_strings(ag1, ag2)
+
+		ag3 = ag_list[2]
+		ag4 = ag_list[3]
+		gls2 = ags_to_strings(ag3, ag4)
+
+		gls = gls1 + "^" + gls2
+
+	if len(ag_list) == 6:
+		print("Three Locus Typing")
+		ag1 = ag_list[0]
+		ag2 = ag_list[1]
+		gls1 = ags_to_strings(ag1, ag2)
+
+		ag3 = ag_list[2]
+		ag4 = ag_list[3]
+		gls2 = ags_to_strings(ag2, ag3)
+
+		ag5 = ag_list[4]
+		ag6 = ag_list[5]
+		gls3 = ags_to_strings(ag4, ag5)
+
+		gls = gls1 + "^" + gls2 + "^" + gls3
+
+	if len(ag_list) == 8:
+		print("Four Locus Typing")
+		ag1 = ag_list[0]
+		ag2 = ag_list[1]
+		gls1 = ags_to_strings(ag1, ag2)
+		
+		ag3 = ag_list[2]
+		ag4 = ag_list[3]
+		gls2 = ags_to_strings(ag3, ag4)
+		
+		ag5 = ag_list[4]
+		ag6 = ag_list[5]
+		gls3 = ags_to_strings(ag5, ag6)
+		
+		
+		ag7 = ag_list[6]
+		ag8 = ag_list[7]
+		gls4 =  ags_to_strings(ag7, ag8)
+
+		gls = gls1 + "^" + gls2 + "^" + gls3 + "^" + gls4 
+
+	if len(ag_list) == 10:
+		print("Five locus Typing")	
+
+		ag1 = ag_list[0]
+		ag2 = ag_list[1]
+		gls1 = ags_to_strings(ag1, ag2)
+		
+		ag3 = ag_list[2]
+		ag4 = ag_list[3]
+		gls2 = ags_to_strings(ag3, ag4)
+		
+		ag5 = ag_list[4]
+		ag6 = ag_list[5]
+		gls3 = ags_to_strings(ag5, ag6)
+		
+		
+		ag7 = ag_list[6]
+		ag8 = ag_list[7]
+		gls4 =  ags_to_strings(ag7, ag8)
+
+		ag9 = ag_list[8]
+		ag10 = ag_list[9]
+		gls5 =  ags_to_strings(ag9, ag10)
+
+		gls = gls1 + "^" + gls2 + "^" + gls3 + "^" + gls4 + "^" + gls5
+
+
+
+		
+	if len(ag_list) == 12:
+		print("Six locus Typing")	
+
+		ag1 = ag_list[0]
+		ag2 = ag_list[1]
+		gls1 = ags_to_strings(ag1, ag2)
+		
+		ag3 = ag_list[2]
+		ag4 = ag_list[3]
+		gls2 = ags_to_strings(ag3, ag4)
+		
+		ag5 = ag_list[4]
+		ag6 = ag_list[5]
+		gls3 = ags_to_strings(ag5, ag6)
+		
+		
+		ag7 = ag_list[6]
+		ag8 = ag_list[7]
+		gls4 =  ags_to_strings(ag7, ag8)
+
+		ag9 = ag_list[8]
+		ag10 = ag_list[9]
+		gls5 =  ags_to_strings(ag9, ag10)
+
+		ag11 = ag_list[10]
+		ag12 = ag_list[11]
+		gls6 = ags_to_strings(ag11, ag12)
+
+		gls = gls1 + "^" + gls2 + "^" + gls3 + "^" + gls4 + "^" + gls5	+ "^" + gls6
+
+
+	return gls
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
