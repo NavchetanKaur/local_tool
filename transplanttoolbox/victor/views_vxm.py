@@ -123,7 +123,7 @@ def match_ags(request):
 	conflict_ags_locus_list = group_serotypes_per_locus(conflicting_ags)
 	optne_locus_list = group_serotypes_per_locus(optn_equis)
 
-	if len(conflicts) == 0:
+	if len(conflicting_ags) == 0:
 		end_result = "Virtual Crossmatch is Negative"
 	else:
 		end_result = "Virtual Crossmatch is Positive"	
@@ -170,7 +170,7 @@ def match_hi_res_alleles(request):
 
 	conflicts = ', '.join(sorted(vxm_output[2]))
 
-	if len(conflicts) == 0:
+	if len(vxm_output[2]) == 0:
 		end_result = "Virtual Crossmatch is Negative"
 	else:
 		end_result = "Virtual Crossmatch is Positive"	
@@ -225,6 +225,7 @@ def match_gl(request):
 	
 	
 	allele_list_with_probs = prob_dict_list_of_strings(allele_probs, bw_prob)
+	print(allele_list_with_probs)
 	
 	antigen_list_with_probs = prob_dict_list_of_strings_for_antigens(allele_probs, antigen_probs)
 	

@@ -102,7 +102,6 @@ def vxm_gls(donor_gl_string, donor_ethnicity, recipient_UA_list):
 	allele_output = output[1]
 	
 	donor_allele_freqs = genotype_allele_ag_freq(allele_output)
-	
 	donor_alleles = vxm_hla.gl_string_alleles_list(donor_gl_string)
 	#donor_allele_freqs = conversion_functions_for_VXM.allele_freq(donor_alleles, donor_ethnicity)
 	
@@ -155,12 +154,8 @@ def vxm_allele_codes(allele_codes_list, donor_ethnicity, recepient_UA_list):
 	bw_prob = {}
 	donor_ags = []
 	output = allele_code_ags(allele_codes_list, donor_ethnicity)
-
-	
 	ag_output = output[0]
 	ag_probs = genotype_allele_ag_freq(ag_output)
-	
-
 	
 	for i,j in ag_probs.items():
 		je = j

@@ -58,7 +58,7 @@ unosagslist = list(set(unosEQags))
 b_bw_dict["Bw4"] = bw4_list
 b_bw_dict["Bw6"] = bw6_list
 
-print(agbw46)
+#print(agbw46)
 
 
 #print(b_bw_dict)	
@@ -795,19 +795,4 @@ def convert_ag_list_to_gls(ag_list):
 
 
 	return gls
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
