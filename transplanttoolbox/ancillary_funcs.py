@@ -322,6 +322,7 @@ def conflicts_ags(allele_dict, conflicts):
 	for i,j in allele_dict.items():
 		ag = allele_to_ag_dict[i][0]
 		if i in conflicts:
+			#print(i)
 			prob = conflicts[i]
 			cag_prob_dict[i] = i + ": " + round_freq_se(prob)
 
@@ -333,9 +334,10 @@ def conflicts_ags(allele_dict, conflicts):
 			else:
 				cag_prob_dict[i] = 	ag + ": " + round_freq_se(prob)
 
-		else:
+		if i not in conflicts and ag not in conflicts:
 			cag_prob_dict[i] = ""
 	
+	#print(cag_prob_dict)
 	bw_cags = []
 	
 	for i,j in conflicts.items():
@@ -368,7 +370,7 @@ def conflicts_ags(allele_dict, conflicts):
 			dq_cags.append(j)			
 
 	list_of_cag_probs = [a_cags] + [b_cags] + [bw_cags] + [c_cags] + [dr_cags] + [dq_cags]
-#print(list_of_cag_probs) 
+	#print(list_of_cag_probs) 
 
 	return list_of_cag_probs
 

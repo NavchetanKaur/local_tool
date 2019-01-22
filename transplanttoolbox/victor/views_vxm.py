@@ -208,6 +208,7 @@ def match_gl(request):
 	candags = vxm_output[1]
 	ag_probabilities = vxm_output[3]
 	allele_probs = vxm_output[4]
+	#print(allele_probs)
 	antigen_probs = vxm_output[5]
 	bw_prob = vxm_output[6]
 	
@@ -225,7 +226,7 @@ def match_gl(request):
 	
 	
 	allele_list_with_probs = prob_dict_list_of_strings(allele_probs, bw_prob)
-	print(allele_list_with_probs)
+	#print(allele_list_with_probs)
 	
 	antigen_list_with_probs = prob_dict_list_of_strings_for_antigens(allele_probs, antigen_probs)
 	
