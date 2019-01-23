@@ -276,7 +276,7 @@ def match_proposed_uags(request):
 	recepientAntigens = request.GET['userinput3']
 	pbTh = float(request.GET['userinput4'])
 
-	donor_gls = convert_ag_list_to_gls(donorTyping)
+	donor_gls = convert_ag_list_to_gls(donorTyping, popSpec)
 
 	if len(recepientAntigens) == 0:
 		recepientAntigens = []

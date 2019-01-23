@@ -6,7 +6,7 @@ import requests
 import operator
 import glob
 import vxm_hla
-from vxm_hla import allele_truncate, locus_string_geno_list, expand_ac, single_locus_allele_codes_genotype, ags_to_strings
+from vxm_hla import allele_truncate, locus_string_geno_list, expand_ac, single_locus_allele_codes_genotype
 import decimal
 from decimal import Decimal
 
@@ -16,7 +16,7 @@ allele_frequencies = {}
 b_bw_dict = {}
 bw4_list = []
 bw6_list = []
-
+ag_to_allele_dict = {}
 
 unosEQags = []
 agbw46 = {}
@@ -35,6 +35,7 @@ for row in UNOS_conversion_table_file:
 		unosEQags.append(antigen)
 		rule = row.split(',') [2]
 		bw4_6 = row.split(',')[3]
+
 		if bw4_6 != "NA":
 			agbw46[antigen] = bw4_6
 		if bw4_6 == "Bw4":
@@ -42,7 +43,15 @@ for row in UNOS_conversion_table_file:
 		if bw4_6 == "Bw6":
 			bw6_list.append(antigen)
 
-		
+		if antigen in ag_to_allele_dict.keys():
+			if allele_4d in ag_to_allele_dict[antigen]:
+				continue
+			else:
+				ag_to_allele_dict[antigen].append(allele_4d)
+
+		else:
+			ag_to_allele_dict[antigen] = [allele_4d]	 
+
 		
 	allele_to_ag_dict[allele] = antigen, rule, bw4_6 
 	allele_to_ag_dict[allele_4d] = antigen, rule, bw4_6
@@ -52,16 +61,9 @@ bw6_list = list(set(bw6_list))
 
 unosagslist = list(set(unosEQags))
 
-#print(unosagslist)
-#print(len(unosagslist))
-
 b_bw_dict["Bw4"] = bw4_list
 b_bw_dict["Bw6"] = bw6_list
-
-#print(agbw46)
-
-
-#print(b_bw_dict)	
+	
 
 for file in glob.glob('*.freqs'):
 	#print(file)
@@ -96,7 +98,29 @@ def map_ag_to_bw46(ag):
 	else:
 		bwe = ""	
 
+def map_ag_to_alleles_pop_specific(antigen, pop):
+	alleles = ag_to_allele_dict[antigen]
+	common_alleles_in_pop = []
+	
+	for allele in alleles:
+		if allele in population_allele_frequencies[pop]:
+			common_alleles_in_pop.append(allele)
 
+
+	pop_specific_alleles = list(set(common_alleles_in_pop))
+	return pop_specific_alleles
+
+def ags_to_strings(ag1, ag2, pop):
+	allele_list1 = map_ag_to_alleles_pop_specific(ag1, pop)
+	#print(len(allele_list1))
+	allele_string1 = "/".join(allele_list1)
+	allele_list2 = map_ag_to_alleles_pop_specific(ag2, pop)
+	#print(len(allele_list2))x
+
+	allele_string2 = "/".join(allele_list2)
+
+	genotype_list = allele_string1 + "+" + allele_string2
+	return genotype_list
 
 def convert_allele_list_to_ags(hla_allele_list):
 	
@@ -436,7 +460,7 @@ def genotype_alleles(genotype_list, pop):
 		
 	#print(geno_antigen_freq)		
 	sorted_gf = sorted(geno_allele_freq.items(), key = operator.itemgetter(1), reverse = True)
-	print(sorted_gf)
+	#print(sorted_gf)
 	
 	return (sorted_gf)
 
@@ -681,22 +705,22 @@ def allele_code_ags(allele_codes_list, pop):
 	#print(ag_list)
 	return ag_list, allele_list
 	
-def convert_ag_list_to_gls(ag_list):
+def convert_ag_list_to_gls(ag_list, pop):
 	if len(ag_list) == 2:
 		print("One Locus Typing")
 		ag1 = ag_list[0]
 		ag2 = ag_list[1]
-		gls = ags_to_strings(ag1, ag2)
+		gls = ags_to_strings(ag1, ag2, pop)
 
 	if len(ag_list) == 4:
 		print("Two Locus Typing")
 		ag1 = ag_list[0]
 		ag2 = ag_list[1]
-		gls1 = ags_to_strings(ag1, ag2)
+		gls1 = ags_to_strings(ag1, ag2, pop)
 
 		ag3 = ag_list[2]
 		ag4 = ag_list[3]
-		gls2 = ags_to_strings(ag3, ag4)
+		gls2 = ags_to_strings(ag3, ag4, pop)
 
 		gls = gls1 + "^" + gls2
 
@@ -704,15 +728,15 @@ def convert_ag_list_to_gls(ag_list):
 		print("Three Locus Typing")
 		ag1 = ag_list[0]
 		ag2 = ag_list[1]
-		gls1 = ags_to_strings(ag1, ag2)
+		gls1 = ags_to_strings(ag1, ag2, pop)
 
 		ag3 = ag_list[2]
 		ag4 = ag_list[3]
-		gls2 = ags_to_strings(ag2, ag3)
+		gls2 = ags_to_strings(ag3, ag4, pop)
 
 		ag5 = ag_list[4]
 		ag6 = ag_list[5]
-		gls3 = ags_to_strings(ag4, ag5)
+		gls3 = ags_to_strings(ag5, ag6, pop)
 
 		gls = gls1 + "^" + gls2 + "^" + gls3
 
@@ -720,20 +744,20 @@ def convert_ag_list_to_gls(ag_list):
 		print("Four Locus Typing")
 		ag1 = ag_list[0]
 		ag2 = ag_list[1]
-		gls1 = ags_to_strings(ag1, ag2)
+		gls1 = ags_to_strings(ag1, ag2, pop)
 		
 		ag3 = ag_list[2]
 		ag4 = ag_list[3]
-		gls2 = ags_to_strings(ag3, ag4)
+		gls2 = ags_to_strings(ag3, ag4, pop)
 		
 		ag5 = ag_list[4]
 		ag6 = ag_list[5]
-		gls3 = ags_to_strings(ag5, ag6)
+		gls3 = ags_to_strings(ag5, ag6, pop)
 		
 		
 		ag7 = ag_list[6]
 		ag8 = ag_list[7]
-		gls4 =  ags_to_strings(ag7, ag8)
+		gls4 =  ags_to_strings(ag7, ag8, pop)
 
 		gls = gls1 + "^" + gls2 + "^" + gls3 + "^" + gls4 
 
@@ -742,24 +766,24 @@ def convert_ag_list_to_gls(ag_list):
 
 		ag1 = ag_list[0]
 		ag2 = ag_list[1]
-		gls1 = ags_to_strings(ag1, ag2)
+		gls1 = ags_to_strings(ag1, ag2, pop)
 		
 		ag3 = ag_list[2]
 		ag4 = ag_list[3]
-		gls2 = ags_to_strings(ag3, ag4)
+		gls2 = ags_to_strings(ag3, ag4, pop)
 		
 		ag5 = ag_list[4]
 		ag6 = ag_list[5]
-		gls3 = ags_to_strings(ag5, ag6)
+		gls3 = ags_to_strings(ag5, ag6, pop)
 		
 		
 		ag7 = ag_list[6]
 		ag8 = ag_list[7]
-		gls4 =  ags_to_strings(ag7, ag8)
+		gls4 =  ags_to_strings(ag7, ag8, pop)
 
 		ag9 = ag_list[8]
 		ag10 = ag_list[9]
-		gls5 =  ags_to_strings(ag9, ag10)
+		gls5 =  ags_to_strings(ag9, ag10, pop)
 
 		gls = gls1 + "^" + gls2 + "^" + gls3 + "^" + gls4 + "^" + gls5
 
@@ -771,32 +795,32 @@ def convert_ag_list_to_gls(ag_list):
 
 		ag1 = ag_list[0]
 		ag2 = ag_list[1]
-		gls1 = ags_to_strings(ag1, ag2)
+		gls1 = ags_to_strings(ag1, ag2, pop)
 		
 		ag3 = ag_list[2]
 		ag4 = ag_list[3]
-		gls2 = ags_to_strings(ag3, ag4)
+		gls2 = ags_to_strings(ag3, ag4, pop)
 		
 		ag5 = ag_list[4]
 		ag6 = ag_list[5]
-		gls3 = ags_to_strings(ag5, ag6)
+		gls3 = ags_to_strings(ag5, ag6, pop)
 		
 		
 		ag7 = ag_list[6]
 		ag8 = ag_list[7]
-		gls4 =  ags_to_strings(ag7, ag8)
+		gls4 =  ags_to_strings(ag7, ag8, pop)
 
 		ag9 = ag_list[8]
 		ag10 = ag_list[9]
-		gls5 =  ags_to_strings(ag9, ag10)
+		gls5 =  ags_to_strings(ag9, ag10, pop)
 
 		ag11 = ag_list[10]
 		ag12 = ag_list[11]
-		gls6 = ags_to_strings(ag11, ag12)
+		gls6 = ags_to_strings(ag11, ag12, pop)
 
 		gls = gls1 + "^" + gls2 + "^" + gls3 + "^" + gls4 + "^" + gls5	+ "^" + gls6
 
-	print(gls)
+	#print(gls)
 
 	return gls
 

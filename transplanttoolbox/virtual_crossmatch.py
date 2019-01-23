@@ -211,7 +211,7 @@ def vxm_allele_codes(allele_codes_list, donor_ethnicity, recepient_UA_list):
 
 def vxm_proposed_for_uags(donorantigens, donorRace, candidateUAs):
 	
-	gls = convert_ag_list_to_gls(donorantigens)
+	gls = convert_ag_list_to_gls(donorantigens, donorRace)
 	output = vxm_gls(gls, donorRace, candidateUAs)
 	#print(output)
 	return output
