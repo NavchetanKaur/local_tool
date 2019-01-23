@@ -213,6 +213,7 @@ def vxm_proposed_for_uags(donorantigens, donorRace, candidateUAs):
 	
 	gls = convert_ag_list_to_gls(donorantigens)
 	output = vxm_gls(gls, donorRace, candidateUAs)
+	#print(output)
 	return output
 
 

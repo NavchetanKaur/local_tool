@@ -144,12 +144,14 @@ def gl_string_ags(gl_string, pop):
 
 	if len(locus_split) == 1:
 		One_locus_typing = 1
-		print("One locus typing")
+		#print("One locus typing")
 		geno_antigen_freq = {}
 		a_locus = locus_split[0]
 		a_genotype_list = vxm_hla.locus_string_geno_list(a_locus)
+		#print(a_genotype_list)
 		a_ags = genotype_ags(a_genotype_list,pop)
 		a_alleles = genotype_alleles(a_genotype_list, pop)
+		#print(a_alleles)
 		ag_list = a_ags  
 		allele_list = a_alleles
 
@@ -365,7 +367,7 @@ def genotype_ags(genotype_list, pop):
 		
 	#print(geno_antigen_freq)		
 	sorted_gf = sorted(geno_antigen_freq.items(), key = operator.itemgetter(1), reverse = True)
-	print(sorted_gf)
+	#print(sorted_gf)
 	#if len(sorted_gf) == 1:
 		#ag_prob = 1
 	#else:
@@ -434,6 +436,7 @@ def genotype_alleles(genotype_list, pop):
 		
 	#print(geno_antigen_freq)		
 	sorted_gf = sorted(geno_allele_freq.items(), key = operator.itemgetter(1), reverse = True)
+	print(sorted_gf)
 	
 	return (sorted_gf)
 
@@ -793,6 +796,7 @@ def convert_ag_list_to_gls(ag_list):
 
 		gls = gls1 + "^" + gls2 + "^" + gls3 + "^" + gls4 + "^" + gls5	+ "^" + gls6
 
+	print(gls)
 
 	return gls
 

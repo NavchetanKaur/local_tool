@@ -110,8 +110,10 @@ def genotype_allele_ag_freq(genotype_frequency):
 
 def ags_to_strings(ag1, ag2):
 	allele_list1 = map_ag_for_proposed_algo(ag1)
+	print(len(allele_list1))
 	allele_string1 = "/".join(allele_list1)
 	allele_list2 = map_ag_for_proposed_algo(ag2)
+	print(len(allele_list2))
 	allele_string2 = "/".join(allele_list2)
 
 	genotype_list = allele_string1 + "+" + allele_string2
