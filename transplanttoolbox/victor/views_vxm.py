@@ -96,6 +96,7 @@ def match_ags(request):
 	donor_typing = donorAgs
 	recepient_ags = list(set(recepientAgs))
 	conflicting_ags = vxm_output[2]
+	print(len(conflicting_ags))
 	optn_equis = vxm_output[1]
 
 
@@ -213,8 +214,7 @@ def match_gl(request):
 	bw_prob = vxm_output[6]
 	
 	ua_locus_list = group_serotypes_per_locus_with_bw_2(allele_probs, recepientAntigens)
-	
-	
+
 	
 	optne_locus_list = group_serotypes_per_locus_with_bw(allele_probs, candags)
 	recepient_ags = ', '.join(sorted(list(set(candags))))
@@ -242,16 +242,16 @@ def match_gl(request):
 		cags.append(i)
 		cag_probs.append(ki)
 	
-
+	print(cags)
 	#cag_list_above_th_locus_sorted = prob_dict_list_of_strings(new_ag_probs)
 	cag_list_above_th_locus_sorted = conflicts_ags(allele_probs, new_ag_probs)
-	#print(cag_list_above_th_locus_sorted)
+	print(cag_list_above_th_locus_sorted)
 	afterThcags = ", ".join(sorted(cags))
 	final_locus_list = ["A", "B", "Bw", "C", "DR", "DQ"]	
 	donor_strings = split_gl_string_per_locus(donorTyping, donor_bws_string)
 	
 
-	if len(conflicted_ag) == 0:
+	if len(cags) == 0:
 		end_result = "Virtual Crossmatch is Negative"
 	else:
 		end_result = "Virtual Crossmatch is Positive"	
@@ -333,7 +333,7 @@ def match_proposed_uags(request):
 	donor_strings = split_gl_string_per_locus(donor_gls, donor_bws_string)
 	
 
-	if len(conflicted_ag) == 0:
+	if len(cags) == 0:
 		end_result = "Virtual Crossmatch is Negative"
 	else:
 		end_result = "Virtual Crossmatch is Positive"	
@@ -417,7 +417,7 @@ def match_ac(request):
 
 	afterThcags = ", ".join(sorted(cags))
 	
-	if len(conflicted_ag) == 0:
+	if len(cags) == 0:
 		end_result = "Virtual Crossmatch is Negative"
 	else:
 		end_result = "Virtual Crossmatch is Positive"	
