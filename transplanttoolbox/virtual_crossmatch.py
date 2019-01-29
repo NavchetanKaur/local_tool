@@ -5,7 +5,8 @@ import os, re
 import requests
 import vxm_hla 
 import itertools
-from vxm_hla import allele_truncate, locus_string_geno_list, expand_ac, single_locus_allele_codes_genotype, gl_string_alleles_list, allele_code_to_allele_list, genotype_allele_ag_freq
+from vxm_hla import allele_truncate, locus_string_geno_list, expand_ac, single_locus_allele_codes_genotype, gl_string_alleles_list, allele_code_to_allele_list
+from vxm_hla import merge_ql_expression_alleles, genotype_allele_ag_freq
 
 import conversion_functions_for_VXM
 from conversion_functions_for_VXM import  gl_string_ags, genotype_ags, allele_code_ags, unosagslist, convert_allele_list_to_ags
@@ -44,8 +45,6 @@ def vxm_uags(donorags, candidateags):
 
 	
 	recepient_ags = map_uas_to_optne(candidateags)
-
-
 	for ag in donorags:
 		if ag in agbw46.keys():
 			donorags.append(agbw46[ag])
@@ -102,6 +101,8 @@ def vxm_gls(donor_gl_string, donor_ethnicity, recipient_UA_list):
 	allele_output = output[1]
 	
 	donor_allele_freqs = genotype_allele_ag_freq(allele_output)
+	donor_allele_freqs = merge_ql_expression_alleles(donor_allele_freqs)
+	
 	donor_alleles = vxm_hla.gl_string_alleles_list(donor_gl_string)
 	#donor_allele_freqs = conversion_functions_for_VXM.allele_freq(donor_alleles, donor_ethnicity)
 	
@@ -168,6 +169,7 @@ def vxm_allele_codes(allele_codes_list, donor_ethnicity, recepient_UA_list):
 	donor_alleles = vxm_hla.allele_code_to_allele_list(allele_codes_list)
 	#donor_allele_freqs = conversion_functions_for_VXM.allele_freq(donor_alleles, donor_ethnicity)
 	donor_allele_freqs = genotype_allele_ag_freq(allele_output)
+	donor_allele_freqs = merge_ql_expression_alleles(donor_allele_freqs)
 	#print(donor_allele_freqs)
 
 

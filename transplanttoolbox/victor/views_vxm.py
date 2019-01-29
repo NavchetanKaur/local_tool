@@ -242,10 +242,10 @@ def match_gl(request):
 		cags.append(i)
 		cag_probs.append(ki)
 	
-	print(cags)
+	#print(cags)
 	#cag_list_above_th_locus_sorted = prob_dict_list_of_strings(new_ag_probs)
 	cag_list_above_th_locus_sorted = conflicts_ags(allele_probs, new_ag_probs)
-	print(cag_list_above_th_locus_sorted)
+	#print(cag_list_above_th_locus_sorted)
 	afterThcags = ", ".join(sorted(cags))
 	final_locus_list = ["A", "B", "Bw", "C", "DR", "DQ"]	
 	donor_strings = split_gl_string_per_locus(donorTyping, donor_bws_string)

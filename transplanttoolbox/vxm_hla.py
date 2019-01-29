@@ -118,3 +118,19 @@ def ags_to_strings(ag1, ag2):
 
 	genotype_list = allele_string1 + "+" + allele_string2
 	return genotype_list
+
+
+def merge_ql_expression_alleles(allele_prob_dict):
+	new_dict = {}
+
+
+	for i,j in allele_prob_dict.items():
+		if i.endswith("L") or i.endswith("Q"):
+			if i[:-1] in allele_prob_dict:
+				new_dict[i[:-1]] += j
+			else:
+				new_dict[i] = j
+		else:
+			new_dict[i] = j		
+
+	return new_dict		
