@@ -59,7 +59,7 @@ def group_serotypes_per_locus(ag_list):
 	return locus_sorted_ag_list	
 
 
-def group_serotypes_per_locus_with_bw(alleles_dict, ag_list):
+def group_serotypes_per_locus_with_bw(sorted_alleles_dict, ag_list):
 	a_locus_ag = []
 	b_locus_ag = []
 	bw_locus_ag = []
@@ -67,7 +67,9 @@ def group_serotypes_per_locus_with_bw(alleles_dict, ag_list):
 	dr_locus_ag = []
 	dq_locus_ag = []
 
-	for i,j in alleles_dict.items():
+	for tup in sorted_alleles_dict:
+		i = tup[0]
+		j = tup[1]
 		ag = allele_to_ag_dict[i][0]
 		bw = allele_to_ag_dict[i][1]
 		if i.startswith("A"):
@@ -164,7 +166,9 @@ def prob_dict_list_of_strings(allele_probs, bw_prob):
 	dq_alleles = []
 
 
-	for i,j in allele_probs.items():
+	for tup in allele_probs:
+		i = tup[0]
+		j = tup[1]
 		if i.startswith("A"):
 			ji = round_freq_se(j)
 			fi = i + ": " + ji 
@@ -192,7 +196,9 @@ def prob_dict_list_of_strings(allele_probs, bw_prob):
 			dr_alleles.append(fi)
 
 
-	for i,j in bw_prob.items():
+	for tup2 in bw_prob:
+		i = tup2[0]
+		j = tup2[1]
 		ji = round_freq_se(j)
 		fi = i + ": " + ji
 		bw_epitopes.append(fi)
@@ -204,7 +210,7 @@ def prob_dict_list_of_strings(allele_probs, bw_prob):
 
 ###### for antigens, conflicting antigens, optne equivalents
 
-def prob_dict_list_of_strings_for_antigens(alleles_dict, ag_probs):
+def prob_dict_list_of_strings_for_antigens(sorted_alleles_dict, ag_probs):
 
 	a_ags = [] 
 	b_ags = []
@@ -214,7 +220,10 @@ def prob_dict_list_of_strings_for_antigens(alleles_dict, ag_probs):
 	bw_ags = []
 
 
-	for i, j in alleles_dict.items():
+	for tup in sorted_alleles_dict:
+		i = tup[0]
+		j = tup[1]
+
 		bw_prob = ""
 		ag_prob = ""
 
@@ -315,11 +324,13 @@ def group_allele_codes_per_locus(donor_typing_list, donor_bws_string):
 
 
 
-def conflicts_ags(allele_dict, conflicts):
+def conflicts_ags(sorted_allele_dict, conflicts):
 
 	cag_prob_dict = {}
 
-	for i,j in allele_dict.items():
+	for tup in sorted_allele_dict:
+		i = tup[0]
+		j = tup[1]
 		ag = allele_to_ag_dict[i][0]
 		if i in conflicts:
 			#print(i)
@@ -407,11 +418,13 @@ def mapping_bws_for_macs(allele_codes_list):
 	return final_bws_mapped_to_macs	
 
 
-def group_serotypes_per_locus_with_bw_2(allele_dict,  ag_list):
+def group_serotypes_per_locus_with_bw_2(sorted_allele_dict,  ag_list):
 
 	cag_prob_dict = {}
 
-	for i,j in allele_dict.items():
+	for tup in sorted_allele_dict:
+		i = tup[0]
+		j = tup[1]
 		ag = allele_to_ag_dict[i][0]
 		if i in ag_list:
 			cag_prob_dict[i] = i 
