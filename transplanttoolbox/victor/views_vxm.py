@@ -96,7 +96,7 @@ def match_ags(request):
 	donor_typing = donorAgs
 	recepient_ags = list(set(recepientAgs))
 	conflicting_ags = vxm_output[2]
-	print(len(conflicting_ags))
+	#print(len(conflicting_ags))
 	optn_equis = vxm_output[1]
 
 
@@ -199,7 +199,7 @@ def match_gl(request):
 		recepientAntigens = []
 	else:
 		recepientAntigens = re.split(r'[;,\s]\s*' , recepientAntigens)
-	print(recepientAntigens)
+	#print(recepientAntigens)
 	
 	entered_recepient_antigens = ", ".join(sorted(list(set(filter(None,recepientAntigens)))))
 	#print(entered_recepient_antigens)
@@ -294,14 +294,16 @@ def match_proposed_uags(request):
 	candags = vxm_output[1]
 	ag_probabilities = vxm_output[3]
 	allele_probs = vxm_output[4]
+	sorted_allele_probs = sorted(allele_probs.items(), key=operator.itemgetter(1), reverse=True)
 	antigen_probs = vxm_output[5]
 	bw_prob = vxm_output[6]
+	sorted_bw_probs = sorted(bw_prob.items(), key=operator.itemgetter(1), reverse=True)
 	
-	ua_locus_list = group_serotypes_per_locus_with_bw_2(allele_probs, recepientAntigens)
+	ua_locus_list = group_serotypes_per_locus_with_bw_2(sorted_allele_probs, recepientAntigens)
 	
 	
 	
-	optne_locus_list = group_serotypes_per_locus_with_bw(allele_probs, candags)
+	optne_locus_list = group_serotypes_per_locus_with_bw(sorted_allele_probs, candags)
 	recepient_ags = ', '.join(sorted(list(set(candags))))
 	conflicted_ag = ', '.join(sorted(list(set(vxm_output[2]))))
 	
@@ -310,9 +312,9 @@ def match_proposed_uags(request):
 	donor_bws_string = "+ ".join(donor_bws)
 	
 	
-	allele_list_with_probs = prob_dict_list_of_strings(allele_probs, bw_prob)
+	allele_list_with_probs = prob_dict_list_of_strings(sorted_allele_probs, sorted_bw_probs)
 	
-	antigen_list_with_probs = prob_dict_list_of_strings_for_antigens(allele_probs, antigen_probs)
+	antigen_list_with_probs = prob_dict_list_of_strings_for_antigens(sorted_allele_probs, antigen_probs)
 	
 	new_ag_probs = {}
 	for ag, pp in ag_probabilities.items():
@@ -328,7 +330,7 @@ def match_proposed_uags(request):
 	
 
 	#cag_list_above_th_locus_sorted = prob_dict_list_of_strings(new_ag_probs)
-	cag_list_above_th_locus_sorted = conflicts_ags(allele_probs, new_ag_probs)
+	cag_list_above_th_locus_sorted = conflicts_ags(sorted_allele_probs, new_ag_probs)
 	#print(cag_list_above_th_locus_sorted)
 	afterThcags = ", ".join(sorted(cags))
 	final_locus_list = ["A", "B", "Bw", "C", "DR", "DQ"]	
@@ -377,11 +379,14 @@ def match_ac(request):
 	conflicted_ag = ', '.join(vxm_output[2])'''
 	ag_probabilities = vxm_output[3]
 	allele_probs = vxm_output[4]
+	sorted_allele_probs = sorted(allele_probs.items(), key=operator.itemgetter(1), reverse=True)
 	antigen_probs = vxm_output[5]
 	bw_prob = vxm_output[6]
+	sorted_bw_probs = sorted(bw_prob.items(), key=operator.itemgetter(1), reverse=True)
+
 	
-	ua_locus_list = group_serotypes_per_locus_with_bw_2(allele_probs, recepientAntigens)
-	optne_locus_list = group_serotypes_per_locus_with_bw(allele_probs, candags)
+	ua_locus_list = group_serotypes_per_locus_with_bw_2(sorted_allele_probs, recepientAntigens)
+	optne_locus_list = group_serotypes_per_locus_with_bw(sorted_allele_probs, candags)
 
 	recepient_ags = ', '.join(sorted(list(set(candags))))
 	conflicted_ag = ', '.join(sorted(list(set(vxm_output[2]))))
@@ -408,14 +413,14 @@ def match_ac(request):
 	final_alleles_codes_list = group_allele_codes_per_locus(donorCodes, donor_bws_string)
 	final_locus_list = ["A", "B", "Bw", "C", "DR", "DQ"]	
 	
-	allele_list_with_probs = prob_dict_list_of_strings(allele_probs, bw_prob)
+	allele_list_with_probs = prob_dict_list_of_strings(sorted_allele_probs, sorted_bw_probs)
 	
-	antigen_list_with_probs = prob_dict_list_of_strings_for_antigens(allele_probs, antigen_probs)
+	antigen_list_with_probs = prob_dict_list_of_strings_for_antigens(sorted_allele_probs, antigen_probs)
 	
 
 	
 	#cag_list_above_th_locus_sorted = prob_dict_list_of_strings(new_ag_probs)
-	cag_list_above_th_locus_sorted = conflicts_ags(allele_probs, new_ag_probs)
+	cag_list_above_th_locus_sorted = conflicts_ags(sorted_allele_probs, new_ag_probs)
 
 	afterThcags = ", ".join(sorted(cags))
 	
