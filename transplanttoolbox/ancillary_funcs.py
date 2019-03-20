@@ -333,6 +333,7 @@ def group_allele_codes_per_locus(donor_typing_list, donor_bws_string):
 	donor_b_alleles = []
 	donor_c_alleles = []
 	donor_dr_alleles = []
+	donor_drb345_alleles = []
 	donor_dq_alleles = []
 	
 
@@ -347,15 +348,18 @@ def group_allele_codes_per_locus(donor_typing_list, donor_bws_string):
 		if locus == "C":
 			donor_c_alleles.append(i)
 
-		if (locus == "DRB1") or (locus == "DRB3") or (locus == "DRB4") or (locus == "DRB5"):
+		if (locus == "DRB1"): 
 			donor_dr_alleles.append(i)
+
+		if (locus == "DRB3") or (locus == "DRB4") or (locus == "DRB5"):	
+			donor_drb345_alleles.append(i)
 
 		if (locus == "DQB1") or (locus == "DQA1"):
 			donor_dq_alleles.append(i)
 
 	bw_string = donor_bws_string
 
-	final_typing_list = [", ".join(sorted(donor_a_alleles))] + [", ".join(sorted(donor_b_alleles))] + [bw_string] + [", ".join(sorted(donor_c_alleles))] + [", ".join(sorted(donor_dr_alleles))] + [", ".join(sorted(donor_dq_alleles))] 
+	final_typing_list = [", ".join(sorted(donor_a_alleles))] + [", ".join(sorted(donor_b_alleles))] + [bw_string] + [", ".join(sorted(donor_c_alleles))] + [", ".join(sorted(donor_dr_alleles))] + [", ".join(sorted(donor_drb345_alleles))] + [", ".join(sorted(donor_dq_alleles))] 
 
 	return final_typing_list
 
@@ -385,7 +389,7 @@ def conflicts_ags(sorted_allele_dict, conflicts): ############Working here######
 		if i not in conflicts and ag not in conflicts:
 			cag_prob_dict[i] = ""
 	
-	print(cag_prob_dict)
+	#print(cag_prob_dict)
 	bw_cags = []
 	
 	for i,j in conflicts.items():
@@ -493,27 +497,32 @@ def group_serotypes_per_locus_with_bw_2(sorted_allele_dict,  ag_list):
 	b_cags = []
 	c_cags = []
 	dr_cags = []
+	drb345_cags = []
 	dq_cags = []
 	
 
 	for i,j in cag_prob_dict.items():
+		locus = i.split("*")[0]
 
-		if i.startswith("A"):
+		if locus == "A":
 			a_cags.append(j)
 
-		if i.startswith("B"):
+		if locus == "B":
 			b_cags.append(j)
 
-		if i.startswith("C"):
+		if locus == "C":
 			c_cags.append(j)
 
-		if i.startswith("DR"):
+		if locus == "DRB1":
 			dr_cags.append(j)
 
-		if i.startswith("DQ"):
+		if locus == "DRB3" or locus == "DRB4" or locus == "DRB5":
+			drb345_cags.append(j)	
+
+		if locus == "DQB1":
 			dq_cags.append(j)			
 
-	list_of_cag_probs = [a_cags] + [b_cags] + [bw_cags] + [c_cags] + [dr_cags] + [dq_cags]
+	list_of_cag_probs = [a_cags] + [b_cags] + [bw_cags] + [c_cags] + [dr_cags] + [drb345_cags] + [dq_cags]
 #print(list_of_cag_probs) 
 
 	return list_of_cag_probs
