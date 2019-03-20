@@ -115,7 +115,7 @@ def match_ags(request):
 
 	#final_locus_list = list(set(locus_list))
 
-	final_locus_list = ["A", "B", "Bw", "C", "DR", "DQ"]	
+	final_locus_list = ["A", "B", "Bw", "C", "DR", "DRB3/4/5", "DQ"]	
 
 		
 
@@ -157,7 +157,7 @@ def match_hi_res_alleles(request):
 
 	##############################################Locus list to be printed in the table rows ##############################################################################
 	
-	final_locus_list = ["A", "B", "Bw", "C", "DR", "DQ"]	
+	final_locus_list = ["A", "B", "Bw", "C", "DR", "DRB3/4/5", "DQ"]	
 	final_alleles_list = group_list_of_alleles_per_locus(donor_alleles_list)	
 	unos_eq_locus_list = group_serotypes_per_locus(donorUNOSAgs)
 	ua_locus_list = group_serotypes_per_locus(recepientAgs)
@@ -210,6 +210,7 @@ def match_gl(request):
 	ag_probabilities = vxm_output[3]
 	allele_probs = vxm_output[4]
 	sorted_allele_probs = sorted(allele_probs.items(), key=operator.itemgetter(1), reverse=True)
+	print(sorted_allele_probs)
 	antigen_probs = vxm_output[5]
 
 	bw_prob = vxm_output[6]
@@ -249,7 +250,7 @@ def match_gl(request):
 	cag_list_above_th_locus_sorted = conflicts_ags(sorted_allele_probs, new_ag_probs)
 	#print(cag_list_above_th_locus_sorted)
 	afterThcags = ", ".join(sorted(cags))
-	final_locus_list = ["A", "B", "Bw", "C", "DR", "DQ"]	
+	final_locus_list = ["A", "B", "Bw", "C", "DR", "DRB3/4/5", "DQ"]	
 	donor_strings = split_gl_string_per_locus(donorTyping, donor_bws_string)
 	
 
@@ -333,7 +334,7 @@ def match_proposed_uags(request):
 	cag_list_above_th_locus_sorted = conflicts_ags(sorted_allele_probs, new_ag_probs)
 	#print(cag_list_above_th_locus_sorted)
 	afterThcags = ", ".join(sorted(cags))
-	final_locus_list = ["A", "B", "Bw", "C", "DR", "DQ"]	
+	final_locus_list = ["A", "B", "Bw", "C", "DR", "DRB3/4/5", "DQ"]	
 	donor_strings = split_gl_string_per_locus(donor_gls, donor_bws_string)
 	
 
@@ -411,7 +412,7 @@ def match_ac(request):
 
 	#donor_strings = split_gl_string_per_locus(donorTyping, donor_bws_string)
 	final_alleles_codes_list = group_allele_codes_per_locus(donorCodes, donor_bws_string)
-	final_locus_list = ["A", "B", "Bw", "C", "DR", "DQ"]	
+	final_locus_list = ["A", "B", "Bw", "C", "DR", "DRB3/4/5", "DQ"]	
 	
 	allele_list_with_probs = prob_dict_list_of_strings(sorted_allele_probs, sorted_bw_probs)
 	
