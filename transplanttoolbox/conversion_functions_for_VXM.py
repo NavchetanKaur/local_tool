@@ -695,7 +695,7 @@ def allele_code_ags(allele_codes_list, pop):
 
 		ag_list = a_ags  + c_ags  + b_ags + dr_ags  + dqb_ags  + dr345_ags
 
-		allele_list = a_alleles + c_alleles + b_alleles + dr_alleles + dq_alleles + dr345_alleles
+		allele_list = a_alleles + c_alleles + b_alleles + dr_alleles + dqb_alleles + dr345_alleles
 
 
 	#ages = ag_list[0::3]

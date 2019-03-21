@@ -64,24 +64,25 @@ def expand_ac(allele_code):
 
 
 def single_locus_allele_codes_genotype(allele_code_pair_list):
-    genotype_list = []
-    MAC_1 = allele_code_pair_list[0]
-    MAC_2 = allele_code_pair_list[1]
+	genotype_list = []
+	MAC_1 = allele_code_pair_list[0]
+	MAC_2 = allele_code_pair_list[1]
 
-    MAC_1_locus = MAC_1.split("*")[0]
-    MAC_2_locus = MAC_2.split("*")[0]
+	MAC_1_locus = MAC_1.split("*")[0]
+	MAC_2_locus = MAC_2.split("*")[0]
 
-    if MAC_1_locus == MAC_2_locus:
-        MAC_1_expanded = expand_ac(MAC_1)
-        MAC_1_expanded_split = MAC_1_expanded.split("/")
-        MAC_2_expanded = expand_ac(MAC_2)
-        MAC_2_expanded_split = MAC_2_expanded.split("/")
+    
+	MAC_1_expanded = expand_ac(MAC_1)
+	MAC_1_expanded_split = MAC_1_expanded.split("/")
+	MAC_2_expanded = expand_ac(MAC_2)
+	MAC_2_expanded_split = MAC_2_expanded.split("/")
         
-        for i in MAC_1_expanded_split:
-            for j in MAC_2_expanded_split:
-                genotype = i + "+" + j
-                genotype_list.append(genotype)
-        return genotype_list
+	for i in MAC_1_expanded_split:
+		for j in MAC_2_expanded_split:
+			genotype = i + "+" + j
+			genotype_list.append(genotype)
+	
+	return genotype_list
 
 
 def allele_code_to_allele_list(allele_code_list):
