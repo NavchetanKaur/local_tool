@@ -12,7 +12,7 @@ from virtual_crossmatch import vxm_gls, vxm_allele_codes, vxm_uags, vxm_hIresall
 
 import ancillary_funcs
 from ancillary_funcs import group_serotypes_per_locus, split_gl_string_per_locus, prob_dict_list_of_strings, group_list_of_alleles_per_locus, prob_dict_list_of_strings_for_antigens
-from ancillary_funcs import conflicts_ags, mapping_bws_for_gls, group_serotypes_per_locus_with_bw, group_serotypes_per_locus_with_bw_2, mapping_bws_for_macs, group_allele_codes_per_locus
+from ancillary_funcs import conflicts_ags, mapping_bws_for_gls, group_serotypes_per_locus_with_bw, group_unacceptable_antigens_per_locus_with_bw, mapping_bws_for_macs, group_allele_codes_per_locus
 from ancillary_funcs import round_freq_se
 import vxm_hla
 
@@ -210,17 +210,18 @@ def match_gl(request):
 	ag_probabilities = vxm_output[3]
 	allele_probs = vxm_output[4]
 	sorted_allele_probs = sorted(allele_probs.items(), key=operator.itemgetter(1), reverse=True)
-	print(sorted_allele_probs)
+	#print(sorted_allele_probs)
 	antigen_probs = vxm_output[5]
 
 	bw_prob = vxm_output[6]
 	sorted_bw_probs = sorted(bw_prob.items(), key=operator.itemgetter(1), reverse=True)
 
 	
-	ua_locus_list = group_serotypes_per_locus_with_bw_2(sorted_allele_probs, recepientAntigens)
+	ua_locus_list = group_unacceptable_antigens_per_locus_with_bw(sorted_allele_probs, recepientAntigens)
+	
 
 	
-	optne_locus_list = group_serotypes_per_locus_with_bw(sorted_allele_probs, candags)
+	optne_locus_list = group_unacceptable_antigens_per_locus_with_bw(sorted_allele_probs, candags)
 	recepient_ags = ', '.join(sorted(list(set(candags))))
 	conflicted_ag = ', '.join(sorted(list(set(vxm_output[2]))))
 	
@@ -285,7 +286,8 @@ def match_proposed_uags(request):
 		recepientAntigens = []
 	else:
 		recepientAntigens = re.split(r'[;,\s]\s*' , recepientAntigens)
-	#print(recepientAntigens)
+	
+	#recepientAntigens = filter(None, recepientAntigens)
 	
 	entered_recepient_antigens = ", ".join(sorted(list(set(filter(None,recepientAntigens)))))
 	#print(entered_recepient_antigens)
@@ -296,15 +298,19 @@ def match_proposed_uags(request):
 	ag_probabilities = vxm_output[3]
 	allele_probs = vxm_output[4]
 	sorted_allele_probs = sorted(allele_probs.items(), key=operator.itemgetter(1), reverse=True)
+	
 	antigen_probs = vxm_output[5]
 	bw_prob = vxm_output[6]
 	sorted_bw_probs = sorted(bw_prob.items(), key=operator.itemgetter(1), reverse=True)
 	
-	ua_locus_list = group_serotypes_per_locus_with_bw_2(sorted_allele_probs, recepientAntigens)
+	ua_locus_list = group_unacceptable_antigens_per_locus_with_bw(sorted_allele_probs, recepientAntigens)
 	
 	
 	
-	optne_locus_list = group_serotypes_per_locus_with_bw(sorted_allele_probs, candags)
+	
+	
+	optne_locus_list = group_unacceptable_antigens_per_locus_with_bw(sorted_allele_probs, candags)
+	
 	recepient_ags = ', '.join(sorted(list(set(candags))))
 	conflicted_ag = ', '.join(sorted(list(set(vxm_output[2]))))
 	
@@ -386,8 +392,11 @@ def match_ac(request):
 	sorted_bw_probs = sorted(bw_prob.items(), key=operator.itemgetter(1), reverse=True)
 
 	
-	ua_locus_list = group_serotypes_per_locus_with_bw_2(sorted_allele_probs, recepientAntigens)
-	optne_locus_list = group_serotypes_per_locus_with_bw(sorted_allele_probs, candags)
+	ua_locus_list = group_unacceptable_antigens_per_locus_with_bw(sorted_allele_probs, recepientAntigens)
+	print(ua_locus_list)
+
+
+	optne_locus_list = group_unacceptable_antigens_per_locus_with_bw(sorted_allele_probs, candags)
 
 	recepient_ags = ', '.join(sorted(list(set(candags))))
 	conflicted_ag = ', '.join(sorted(list(set(vxm_output[2]))))

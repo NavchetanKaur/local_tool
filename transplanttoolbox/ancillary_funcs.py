@@ -6,6 +6,8 @@ import vxm_hla
 import decimal
 from decimal import Decimal
 
+
+#### Making dictionary of the alleles and antigens, bw4/6 from conversion table
 allele_to_ag_dict = {}
 UNOS_conversion_table_filename = "UNOS_conversion_table_with_rules.csv"
 UNOS_conversion_table_file = open(UNOS_conversion_table_filename, 'r')
@@ -22,7 +24,7 @@ for row in UNOS_conversion_table_file:
 	allele_to_ag_dict[allele_4d] = [antigen, bw4_6]
 
 
-
+#### Function to group antigens as per locus, used in the UNOS antigen HLA typing input 
 
 def group_serotypes_per_locus(ag_list):
 	a_locus_ag = []
@@ -326,7 +328,7 @@ def group_list_of_alleles_per_locus(donor_typing_list):
 	return final_typing_list
 
 
-
+#### Function to group allele codes as per locus
 
 def group_allele_codes_per_locus(donor_typing_list, donor_bws_string):
 	donor_a_alleles = []
@@ -364,6 +366,8 @@ def group_allele_codes_per_locus(donor_typing_list, donor_bws_string):
 	return final_typing_list
 
 
+
+#### Grouping conflicting antigens as per locus and with their probabilities. These are DSA
 
 def conflicts_ags(sorted_allele_dict, conflicts): ############Working here#########
 
@@ -437,6 +441,8 @@ def optne_sorting(allele_probs, optne):
 		print(i)
 
 
+
+##### Function to map Bw4 and Bw6 epitopes to B alleles in Genotype List String
 def mapping_bws_for_gls(gl_string):
 	bws_list = []
 	alleles_list = vxm_hla.gl_string_alleles_list(gl_string)
@@ -449,6 +455,10 @@ def mapping_bws_for_gls(gl_string):
 	final_bws_mapped_to_gls = list(set(bws_list))
 	
 	return final_bws_mapped_to_gls		
+
+
+
+### Function to map Bw4/Bw6 epitopes to B alleles in MACS
 
 def mapping_bws_for_macs(allele_codes_list):
 	bws_list = []
@@ -464,26 +474,28 @@ def mapping_bws_for_macs(allele_codes_list):
 	return final_bws_mapped_to_macs	
 
 
-def group_serotypes_per_locus_with_bw_2(sorted_allele_dict,  ag_list):
+def group_unacceptable_antigens_per_locus_with_bw(sorted_allele_list,  ag_list):
 
 	cag_prob_dict = {}
-
-	for tup in sorted_allele_dict:
-		i = tup[0]
-		j = tup[1]
-		ag = allele_to_ag_dict[i][0]
-		if i in ag_list:
-			cag_prob_dict[i] = i 
+	
+	## sorted allele dict is a list of sorted tuples 
+	for tup in sorted_allele_list:
+		allele = tup[0]
+		ag = allele_to_ag_dict[allele][0]
+		
+		if allele in ag_list:
+			cag_prob_dict[allele] = allele 
 
 		if ag in ag_list:
-			if i in cag_prob_dict.keys():
-				cag_prob_dict[i] = cag_prob_dict[i] + " " + "(" + ag + ")"
+			if allele in cag_prob_dict.keys():
+				cag_prob_dict[allele] = cag_prob_dict[allele] + " " + "(" + ag + ")"
 
 			else:
-				cag_prob_dict[i] = 	ag 
+				cag_prob_dict[allele] = 	ag 
 
-		else:
-			cag_prob_dict[i] = ""
+		if allele not in ag_list and ag not in ag_list:
+			cag_prob_dict[allele] = ""
+	
 	
 	bw_cags = []
 	
@@ -491,6 +503,8 @@ def group_serotypes_per_locus_with_bw_2(sorted_allele_dict,  ag_list):
 		if i == "Bw4" or i == "Bw6":
 			bw_prob_list_element = i 
 			bw_cags.append(bw_prob_list_element)
+
+	
 	
 
 	a_cags = []
@@ -523,11 +537,12 @@ def group_serotypes_per_locus_with_bw_2(sorted_allele_dict,  ag_list):
 			dq_cags.append(j)			
 
 	list_of_cag_probs = [a_cags] + [b_cags] + [bw_cags] + [c_cags] + [dr_cags] + [drb345_cags] + [dq_cags]
-#print(list_of_cag_probs) 
+
 
 	return list_of_cag_probs
 
 
+##### Function to represent allele and antigen frequencies lower than 0.01 as scientific notation and rounding to 4 digits
 
 def round_freq_se(frequency):
 	if frequency < 0.01:
