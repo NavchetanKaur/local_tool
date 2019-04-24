@@ -10,6 +10,7 @@ from decimal import Decimal
 #### Making dictionary of the alleles and antigens, bw4/6 from conversion table
 allele_to_ag_dict = {}
 UNOS_conversion_table_filename = "UNOS_conversion_table_with_rules.csv"
+#UNOS_conversion_table_filename = "/opt/bitnami/apps/django/django_projects/Project/conversion_table.csv"
 UNOS_conversion_table_file = open(UNOS_conversion_table_filename, 'r')
 for row in UNOS_conversion_table_file:
 	expression_character = ""

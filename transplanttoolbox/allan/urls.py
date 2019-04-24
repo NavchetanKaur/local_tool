@@ -26,6 +26,7 @@ from django.urls import path
 urlpatterns = [
     path('', views.home, name="home"),
     path('home_1', views.home_1, name="home_1"),
+    path('cpra_message', views.cpra_maintenance_message, name="cpra_message"),
     path('license', views.license, name="license"),
     path('allele', views.allele, name="allele"),
     path('lists', views.allele_list, name="lists"),

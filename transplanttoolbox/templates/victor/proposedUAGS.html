@@ -61,10 +61,10 @@
     <h3 class="container text-danger text-center font-weight-bold mt-5 mb-5"> Proposed Imputation Method  </h3>
     
 <div> 
-    <p class="container jumbotron pt-4 pb-4 lead" > Enter Donor's HLA typing data as UNOS Antigen Equivalents in the text box, select the subject's race/ethnic category, and add Candidate's Unacceptable Antigens in the second text area and click on "SUBMIT" to run virtual cross match. Population-specific HLA frequencies from NMDP are used to assign the most probable Alleles for donor HLA typing. HLA loci supported are A, B, C, DRB1, DQB1, DRB3/4/5. </p>
+    <p class="container jumbotron pt-4 pb-4 lead" > Enter Donor's HLA typing data as UNOS Antigen Equivalents in the text box, select the subject's race/ethnic category, and add Candidate's Unacceptable Antigens in the second text area and click on "SUBMIT" to run virtual cross match. The antigens in donor tyoing should be entered consecutively in pairs for each locus. For homozygous, enter the same antigen twice. For example, for locus A, antigen should be entered as A2 A24 or A2 A2, if homozygous.Typing and Unacceptable antigens for C locus should have a preceding zero (For example C07), if they range from 1 through 9 (C01 through C09).Population-specific HLA frequencies from NMDP are used to assign the most probable Alleles for donor HLA typing. HLA loci supported are A, B, C, DRB1, DQB1, DRB3/4/5. </p>
     
     <form class="container text-center text-primary mt-5" action="{% url 'proposedmatchuags' %}" method="get">
-       <textarea name = "userinput1" rows = "5" cols = "80" > A3 A1 B7 B8 C07 C05 DR15 DR3 DQ2 DQ6</textarea> 
+       <textarea name = "userinput1" rows = "5" cols = "80" > A2 A33 B44 B65 C05 C08 DR1 DR13 DR52 DR52 DQ5 DQ6 </textarea> 
         <br />
       
     <!--<h4 class=" text-danger mt-5"> Select Broad/Detailed Race </h4>-->
@@ -116,7 +116,7 @@
          </div> 
      </div>   
      <h4 class="text-danger font-weight-bold mb-3 mt-5"> Candidate's Unacceptable Antigens </h4>
-     <div> <textarea name = "userinput3" rows = "1" cols = "80" >A2 Bw4 A*01:01 </textarea>   </div> 
+     <div> <textarea name = "userinput3" rows = "3" cols = "80" > B7 B13 B27 B41 B47 B48 B50 B51 B52 B60 B61 B62 B71 B73 B75 B77 B81 DR4 DR8 DR11 DR15 DR16 DQ2 DQ4 DQ7 DQ8 DQ9 A*11:02 A*66:02 DRB3*02:02 DRB1*13:03 </textarea>   </div> 
     
      <h4 class="text-danger font-weight-bold mt-5 mb-3"> Probability Threshold </h4>
     <div class="jumbotron pb-2 pt-3">  <h5 class= "container text-secondary active text-center lead"> In case of donor's ambiguous HLA typing there is a probability of positive virtual crossmatch for every unacceptable antigen. Users can indicate the probability threshold of their choice in the text area below. Default value is 0.1 and range is 0 through 1. For a  value "X" entered by the user all the unacceptable antigens that have probability of positive virtual crossmatch lower than "X" will be excluded by VICTOR </h5>  </div>

@@ -25,7 +25,7 @@
               </li>
 
               <li class="nav-item active">
-                <a class="nav-link text-white h5  pl-5 pr-5" href="https://transplanttoolbox.shinyapps.io/cpra-allele/"> CPRA Calculator </a>
+                <a class="nav-link text-white h5  pl-5 pr-5" href="{% url 'cpra_message' %}"> CPRA Calculator </a>
               </li>
 
               <li class="nav-item active">
@@ -79,7 +79,7 @@
     <div class="card-body">
       <h1 class="card-title"> CPRA Calculator </h1>
       <p class="card-text"> Compute CPRA with NMDP Allele Frequencies Data and Allele Specific Unacceptables </p>
-      <a href="https://transplanttoolbox.shinyapps.io/cpra-allele/" class="btn btn-lg btn-dark" > CLICK HERE !</a>
+      <a href="{% url 'cpra_message' %}" class="btn btn-lg btn-dark" > CLICK HERE !</a>
       </div>
       </div>
 </div>

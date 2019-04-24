@@ -30,6 +30,8 @@ for i in conversion_functions.allele_to_ag_dict.keys():
 def ttb_home(request):
 	return render(request, "ttb_home.html")
 
+def cpra_maintenance_message(request):
+    return render(request, "cpra_message.html")
 
 def home(request):
 	return render(request, "allan/home.html")
