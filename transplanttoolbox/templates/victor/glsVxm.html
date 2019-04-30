@@ -63,7 +63,7 @@
     <p class="container jumbotron pt-4 pb-4 lead" > Enter Donor's HLA typing data as Genotype List (GL) String of IMGT/HLA alleles in the text box, select the subject's race/ethnic category, and add Candidate's Unacceptable Antigens in the second text area and click on "SUBMIT" to run virtual cross match. Alleles in the GL string should be resolved to specific HLA protein field (2nd field) or fully resolved (full IMGT/HLA allele name). Protein expression specifying characters ("L", "N", "S", "Q") can be used. Characters that specify antigen recognition domain equivalents (“G”, “P”, “g") can also be used. Population-specific HLA frequencies from NMDP are used to assign the most probable UNOS antigen equivalents for donor HLA typing. HLA loci supported are A, B, C, DRB1, DQB1, DRB3/4/5. </p>
     
     <form class="container text-center text-primary mt-5" action="{% url 'matchgls' %}" method="get">
-       <textarea name = "userinput1" rows = "5" cols = "80" >A*02:01g+A*26:01g|A*02:55+A*26:07^C*05:01g+C*01:02g^B*15:01/B*15:02/B*15:03/B*15:04+B*27:05g^DRB1*12:01g+DRB1*01:01^DQB1*03:01g+DQB1*05:01</textarea> 
+       <textarea name = "userinput1" rows = "5" cols = "80" >A*74:01+A*26:01g|A*74:03+A*26:07^C*02:02+C*06:02^B*15:01/B*15:02/B*15:03/B*15:04+B*58:02g^DRB1*03:02+DRB1*12:01^DRB3*01:01+DRB3*02:01^DQB1*04:02g+DQB1*05:01</textarea> 
         <br />
       
     <!--<h4 class=" text-danger mt-5"> Select Broad/Detailed Race </h4>-->
@@ -115,7 +115,8 @@
          </div> 
      </div>   
      <h4 class=" text-danger font-weight-bold mt-5 mb-3"> Candidate's Unacceptable Antigens </h4>
-     <div> <textarea name = "userinput3" rows = "2" cols = "80" >A2 Bw4 A*02:01 </textarea>   </div>       
+     <div> <textarea name = "userinput3" rows = "3" cols = "80" >DR1 DR4 DR8 DR10 DR11 DR14 DR15 DR16 DR51 DR53 DQ7 A1 Bw4 A*02:01 B70 DRB1*12:02 DRB1*13:03
+</textarea>   </div>       
    
   <h4 class="text-danger font-weight-bold mt-5 mb-3"> Probability Threshold </h4> 
   <div class="jumbotron pb-2 pt-3">  <h5 class= "container text-secondary active text-center lead"> In case of donor's ambiguous HLA typing there is a probability of positive virtual crossmatch for every unacceptable antigen. Users can indicate the probability threshold of their choice in the text area below. Default value is 0.1 and range is 0 through 1. For a value "X" entered by the user all the unacceptable antigens that have probability of positive virtual crossmatch lower than "X" will be excluded by VICTOR. </h5>  </div>
