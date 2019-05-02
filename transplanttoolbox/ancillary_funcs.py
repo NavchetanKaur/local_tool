@@ -1,6 +1,7 @@
 
 #! usr/bin/python
 
+##### This script has functions that map the VXM parameters in the high resolution VXM probability table
 import os, re
 import vxm_hla
 import decimal
@@ -8,7 +9,7 @@ from decimal import Decimal
 
 regex = re.compile(r'(\d+|\s+)')
 
-#### Making dictionary of the alleles and antigens, bw4/6 from conversion table
+#### Making dictionary of the alleles and antigens, bw4/6 from conversion table to map elements in the high res table
 allele_to_ag_dict = {}
 UNOS_conversion_table_filename = "UNOS_conversion_table_with_rules.csv"
 #UNOS_conversion_table_filename = "/opt/bitnami/apps/django/django_projects/Project/conversion_table.csv"
@@ -27,9 +28,10 @@ for row in UNOS_conversion_table_file:
 
 regex = re.compile(r'(\d+|\s+)')
 
-#### Function to group antigens as per locus, used in the UNOS antigen HLA typing input 
+
 
 def group_serotypes_per_locus(ag_list):
+	'''Function to group antigens and alleles as per loci (UNOS antigen equivalents, UAs and OPTN equiavalents)'''
 	a_locus_ag = []
 	b_locus_ag = []
 	bw_locus_ag = []
@@ -82,6 +84,7 @@ def group_serotypes_per_locus(ag_list):
 
 
 def group_serotypes_per_locus_with_bw(sorted_alleles_dict, ag_list):
+	'''Maps the antigens to alleles in each row of the high res table'''
 	a_locus_ag = []
 	b_locus_ag = []
 	bw_locus_ag = []
@@ -148,6 +151,7 @@ def group_serotypes_per_locus_with_bw(sorted_alleles_dict, ag_list):
 	return locus_sorted_ag_list	
 
 def split_gl_string_per_locus(gl_string, donor_bws_string):
+	'''The GL string entered by user is chopped based on loci for distinct rows in the high res table'''
 	a_string = ""
 	b_string = ""
 	bw_string = ""
@@ -196,6 +200,7 @@ def split_gl_string_per_locus(gl_string, donor_bws_string):
 ##### for alleles #################
 
 def prob_dict_list_of_strings(allele_probs, bw_prob):
+	'''The alleles from distinct loci are listed in different rows in high res table'''
 
 	a_alleles = [] 
 	bw_epitopes = []
@@ -257,6 +262,7 @@ def prob_dict_list_of_strings(allele_probs, bw_prob):
 ###### for antigens, conflicting antigens, optne equivalents
 
 def prob_dict_list_of_strings_for_antigens(sorted_alleles_dict, ag_probs):
+	'''Antigens are mapped to alleles in the second column in the high res table'''
 
 	a_ags = [] 
 	b_ags = []
@@ -310,6 +316,7 @@ def prob_dict_list_of_strings_for_antigens(sorted_alleles_dict, ag_probs):
 
 
 def group_list_of_alleles_per_locus(donor_typing_list):
+	'''The alleles are grouped according to loci'''
 	donor_a_alleles = []
 	donor_b_alleles = []
 	donor_c_alleles = []
@@ -347,6 +354,7 @@ def group_list_of_alleles_per_locus(donor_typing_list):
 #### Function to group allele codes as per locus
 
 def group_allele_codes_per_locus(donor_typing_list, donor_bws_string):
+	'''Allele codes are grouped according to loci'''
 	donor_a_alleles = []
 	donor_b_alleles = []
 	donor_c_alleles = []
@@ -385,7 +393,8 @@ def group_allele_codes_per_locus(donor_typing_list, donor_bws_string):
 
 #### Grouping conflicting antigens as per locus and with their probabilities. These are DSA
 
-def conflicts_ags(sorted_allele_dict, conflicts): ############Working here#########
+def conflicts_ags(sorted_allele_dict, conflicts): 
+	'''The conflicting antigens are mapped to alleles in the second column'''
 
 	cag_prob_dict = {}
 
@@ -452,14 +461,9 @@ def conflicts_ags(sorted_allele_dict, conflicts): ############Working here######
 	return list_of_cag_probs
 
 
-def optne_sorting(allele_probs, optne):
-	for i in allele_probs.keys():
-		print(i)
 
-
-
-##### Function to map Bw4 and Bw6 epitopes to B alleles in Genotype List String
 def mapping_bws_for_gls(gl_string):
+	'''Function to map Bw4 and Bw6 epitopes to B alleles in Genotype List String'''
 	bws_list = []
 	alleles_list = vxm_hla.gl_string_alleles_list(gl_string)
 
@@ -474,9 +478,9 @@ def mapping_bws_for_gls(gl_string):
 
 
 
-### Function to map Bw4/Bw6 epitopes to B alleles in MACS
 
 def mapping_bws_for_macs(allele_codes_list):
+	'''Function to map Bw4/Bw6 epitopes to B alleles in MACS'''
 	bws_list = []
 	alleles_list = vxm_hla.allele_code_to_allele_list(allele_codes_list)
 
@@ -488,6 +492,7 @@ def mapping_bws_for_macs(allele_codes_list):
 	final_bws_mapped_to_macs = list(set(bws_list))
 	
 	return final_bws_mapped_to_macs	
+
 
 
 def group_unacceptable_antigens_per_locus_with_bw(sorted_allele_list,  ag_list):
@@ -561,6 +566,7 @@ def group_unacceptable_antigens_per_locus_with_bw(sorted_allele_list,  ag_list):
 ##### Function to represent allele and antigen frequencies lower than 0.01 as scientific notation and rounding to 4 digits
 
 def round_freq_se(frequency):
+	'''Rounds the allele/ag frequencies or represents them in scientific notation depending on the length of floating point number'''
 	if frequency < 0.01:
 		edited_frequency = '%.2E' % Decimal(frequency)
 	else: 
