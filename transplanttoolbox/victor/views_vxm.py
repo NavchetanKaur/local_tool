@@ -150,8 +150,10 @@ def match_hi_res_alleles(request):
 	else:
 		recepientAgs = re.split(r'[;,\s]\s*' , recepientAgs) 	
 
+	print(recepientAgs)
 	vxm_output = vxm_hIresalleles(donor_alleles_list, recepientAgs)
 	donorUNOSAgs= (vxm_output)[0]
+
 	
 	
 

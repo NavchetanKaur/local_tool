@@ -6,6 +6,7 @@ import vxm_hla
 import decimal
 from decimal import Decimal
 
+regex = re.compile(r'(\d+|\s+)')
 
 #### Making dictionary of the alleles and antigens, bw4/6 from conversion table
 allele_to_ag_dict = {}
@@ -24,6 +25,7 @@ for row in UNOS_conversion_table_file:
 	
 	allele_to_ag_dict[allele_4d] = [antigen, bw4_6]
 
+regex = re.compile(r'(\d+|\s+)')
 
 #### Function to group antigens as per locus, used in the UNOS antigen HLA typing input 
 
@@ -37,28 +39,41 @@ def group_serotypes_per_locus(ag_list):
 	dq_locus_ag = []
 
 	for ag in ag_list:
-
-		if ag == "Bw4" or ag == "Bw6":
-			bw_locus_ag.append(ag)
-
-		elif ag == "DR51" or ag == "DR52" or ag =="DR53":
-			drb345_locus_ag.append(ag)	
-
-		else:	
-			if re.findall("A", ag):
+		if "*" in ag:
+			locus = ag.split("*")[0]
+			if locus == "A":
 				a_locus_ag.append(ag)
-
-			if re.findall("B", ag):
-				b_locus_ag.append(ag)	
-
-			if re.findall("C", ag):
+			if locus == "B":
+				b_locus_ag.append(ag)
+			if locus == "C":
 				c_locus_ag.append(ag)
+			if locus == "DRB1":
+				dr_locus_ag.append(ag)
+			if locus == "DQB1":
+				dq_locus_ag.append(ag)
+			if locus == "DRB3" or locus == "DRB4" or locus == "DRB5":
+				drb345_locus_ag.append(ag)
 
-			if re.findall("DR", ag):
-				dr_locus_ag.append(ag)		
-		
-			if re.findall("DQ", ag):
-				dq_locus_ag.append(ag)		
+	
+		elif ag == "Bw4" or ag == "Bw6":
+			bw_locus_ag.append(ag)
+		elif ag == "DR51" or ag == "DR52" or ag == "DR53":
+			drb345_locus_ag.append(ag)	
+	
+		else:
+			ag_locus = regex.split(ag)[0]
+			if ag_locus == "A":
+				a_locus_ag.append(ag)
+			if ag_locus == "B":
+				b_locus_ag.append(ag)
+			if ag_locus == "C":
+				c_locus_ag.append(ag)
+			if ag_locus == "DR":
+				dr_locus_ag.append(ag)	
+			if ag_locus == "DQ":
+				dq_locus_ag.append(ag)	
+
+			
 
 	locus_sorted_ag_list = [", ".join(sorted(a_locus_ag))] + [", ".join(sorted(b_locus_ag))] + [", ".join(sorted(bw_locus_ag))] + [", ".join(sorted(c_locus_ag))] + [", ".join(sorted(dr_locus_ag))] + [", ".join(sorted(drb345_locus_ag))] + [", ".join(sorted(dq_locus_ag))]
 
